@@ -35,16 +35,21 @@ resources/
 1. Öffne `config.lua` mit einem Texteditor
 
 2. Finde deine Steam ID oder License ID:
-   - **Steam ID finden**: 
-     - Gehe zu https://steamid.io/
-     - Gib deinen Steam Profil Link ein
-     - Kopiere die SteamID64
-     - Konvertiere: `steam:110000xxxxxxxx` (die letzten Ziffern deiner SteamID64)
-   
-   - **License ID finden**:
+   - **License ID finden** (EMPFOHLEN):
      - Starte deinen FiveM Server
      - Verbinde dich mit dem Server
-     - In der Server Console siehst du: `license:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+     - Öffne die Server Console (F8 im Server-Terminal)
+     - Suche nach einer Zeile die so aussieht: `[system] Player Connecting: YourName (license:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)`
+     - Die License ID ist der komplette String: `license:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx`
+     - Kopiere die gesamte License ID inklusive `license:`
+   
+   - **Steam ID finden** (Alternative):
+     - Gehe zu https://steamid.io/
+     - Gib deinen Steam Profil Link ein
+     - Kopiere die SteamID64 (z.B. 76561198012345678)
+     - Konvertiere zu FiveM Format: Entferne die ersten 7 Ziffern (7656119) und füge `steam:` davor
+     - Beispiel: 76561198012345678 → `steam:8012345678` (ohne die ersten 7 Ziffern von der SteamID64)
+     - ODER einfacher: Schaue in der Server Console nach `steam:110000xxxxxxxx`
 
 3. Trage deine ID in die Config ein:
 ```lua

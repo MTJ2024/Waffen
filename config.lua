@@ -1,6 +1,29 @@
 Config = {}
 
+-- ════════════════════════════════════════════════════════════════
+-- WICHTIG: Wie finde ich meine License ID?
+-- ════════════════════════════════════════════════════════════════
+-- 1. Starte deinen FiveM Server
+-- 2. Verbinde dich mit dem Server  
+-- 3. Schaue in die Server Console (F8 im Terminal)
+-- 4. Suche nach: "Player Connecting: DeinName (license:xxxxx...)"
+-- 5. Kopiere die komplette license ID (z.B. license:abc123def456...)
+-- 6. Füge sie unten in die Liste ein
+--
+-- Beispiel in der Console:
+-- [system] Player Connecting: MaxMustermann (license:1a2b3c4d5e6f7g8h9i0j...)
+--
+-- Dann kopiere: license:1a2b3c4d5e6f7g8h9i0j...
+-- ════════════════════════════════════════════════════════════════
+
 Config.AuthorizedPlayers = {
+    -- Füge hier deine License ID oder Steam ID ein:
+    -- "license:1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t",
+    -- "steam:110000xxxxxxxx",
+    
+    -- Mehrere IDs möglich:
+    -- "license:abc123...",
+    -- "license:def456...",
 }
 
 Config.OpenKey = 'F9'

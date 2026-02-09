@@ -1,32 +1,20 @@
 local isAuthorized = false
 local uiOpen = false
 
--- Check if player is authorized
+-- Request authorization status from server when player spawns
 Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(1000)
-        
-        local playerIdentifiers = {}
-        for _, id in ipairs(GetPlayerIdentifiers(PlayerId())) do
-            table.insert(playerIdentifiers, id)
-        end
-        
-        for _, authorizedId in ipairs(Config.AuthorizedPlayers) do
-            for _, playerId in ipairs(playerIdentifiers) do
-                if playerId == authorizedId then
-                    isAuthorized = true
-                    break
-                end
-            end
-            if isAuthorized then break end
-        end
-        
-        -- If no authorized players configured, allow access (for testing)
-        if #Config.AuthorizedPlayers == 0 then
-            isAuthorized = true
-        end
-        
-        break
+    Citizen.Wait(1000) -- Wait for player to fully load
+    TriggerServerEvent('waffen:checkAuthorization')
+end)
+
+-- Receive authorization status from server
+RegisterNetEvent('waffen:setAuthorization')
+AddEventHandler('waffen:setAuthorization', function(authorized)
+    isAuthorized = authorized
+    if authorized then
+        print("^2[Waffen] ^7Du bist autorisiert für das Waffen-Menü^0")
+    else
+        print("^1[Waffen] ^7Du bist nicht autorisiert für das Waffen-Menü^0")
     end
 end)
 
