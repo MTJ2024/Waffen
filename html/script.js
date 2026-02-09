@@ -28,6 +28,9 @@ document.addEventListener('keydown', function(event) {
 
 // Close UI
 function closeUI() {
+    const container = document.getElementById('container');
+    container.classList.add('hidden');
+    
     fetch(`https://${GetParentResourceName()}/closeUI`, {
         method: 'POST',
         headers: {
@@ -36,6 +39,24 @@ function closeUI() {
         body: JSON.stringify({})
     });
 }
+
+// Mouse wheel navigation for weapons list
+let weaponsList;
+document.addEventListener('DOMContentLoaded', function() {
+    weaponsList = document.getElementById('weapons-list');
+    
+    // Add smooth mouse wheel scrolling
+    if (weaponsList) {
+        weaponsList.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            const delta = e.deltaY;
+            weaponsList.scrollBy({
+                top: delta,
+                behavior: 'smooth'
+            });
+        });
+    }
+});
 
 // Get resource name
 function GetParentResourceName() {
@@ -133,7 +154,7 @@ function displayWeapons() {
                 <div class="item-id">${weapon.name}</div>
                 <div class="item-actions">
                     <button class="btn btn-success" onclick="spawnWeapon('${weapon.name}')">
-                        <span class="btn-icon">➕</span>
+                        <span class="btn-icon">+</span>
                         Spawnen
                     </button>
                 </div>
@@ -145,7 +166,7 @@ function displayWeapons() {
     if (!hasWeapons) {
         weaponsList.innerHTML = `
             <div class="empty-state">
-                <div class="empty-state-icon">🔍</div>
+                <div class="empty-state-icon">-</div>
                 <h3>Keine Waffen gefunden</h3>
                 <p>Versuche einen anderen Suchbegriff oder wähle eine andere Kategorie</p>
             </div>
@@ -226,7 +247,7 @@ function displayItems() {
             <div class="item-id">${item.name}</div>
             <div class="item-actions">
                 <button class="btn btn-success" onclick="spawnItem('${item.name}')">
-                    <span class="btn-icon">➕</span>
+                    <span class="btn-icon">+</span>
                     Spawnen
                 </button>
             </div>
@@ -237,7 +258,7 @@ function displayItems() {
     if (!hasItems) {
         itemsList.innerHTML = `
             <div class="empty-state">
-                <div class="empty-state-icon">🔍</div>
+                <div class="empty-state-icon">-</div>
                 <h3>Keine Items gefunden</h3>
                 <p>Versuche einen anderen Suchbegriff</p>
             </div>
@@ -308,13 +329,13 @@ function displayPlayers() {
         playerCard.innerHTML = `
             <div class="player-header">
                 <div class="player-info">
-                    <div class="player-avatar">👤</div>
+                    <div class="player-avatar">U</div>
                     <div class="player-details">
                         <h3>${player.name}</h3>
                         <p>ID: ${player.id}</p>
                     </div>
                 </div>
-                <div class="player-distance">📍 ${player.distance}m</div>
+                <div class="player-distance">• ${player.distance}m</div>
             </div>
             <div class="player-actions">
                 <div class="player-action-section">
@@ -326,7 +347,7 @@ function displayPlayers() {
                             </select>
                         </div>
                         <button class="btn btn-primary" onclick="giveWeaponToPlayer(${player.id})">
-                            <span class="btn-icon">🎁</span>
+                            <span class="btn-icon">></span>
                             Waffe geben
                         </button>
                     </div>
@@ -340,7 +361,7 @@ function displayPlayers() {
                             </select>
                         </div>
                         <button class="btn btn-primary" onclick="giveItemToPlayer(${player.id})">
-                            <span class="btn-icon">🎁</span>
+                            <span class="btn-icon">></span>
                             Item geben
                         </button>
                     </div>

@@ -12,25 +12,25 @@
             <!-- Header -->
             <div class="header">
                 <div class="header-title">
-                    <h1>🔫 WAFFEN MANAGEMENT SYSTEM</h1>
-                    <p class="subtitle">Professional Owner Control Panel</p>
+                    <h1>WAFFEN MANAGEMENT</h1>
+                    <p class="subtitle">Professional Admin Control</p>
                 </div>
-                <button class="close-btn" onclick="closeUI()">✖</button>
+                <button class="close-btn" onclick="closeUI()">×</button>
             </div>
 
             <!-- Navigation Tabs -->
             <div class="tabs">
                 <button class="tab-btn active" onclick="switchTab('weapons', this)">
-                    <span class="tab-icon">🔫</span>
-                    Waffen
+                    <span class="tab-icon">▸</span>
+                    WAFFEN
                 </button>
                 <button class="tab-btn" onclick="switchTab('items', this)">
-                    <span class="tab-icon">📦</span>
-                    Items
+                    <span class="tab-icon">▸</span>
+                    ITEMS
                 </button>
                 <button class="tab-btn" onclick="switchTab('players', this)">
-                    <span class="tab-icon">👥</span>
-                    Spieler
+                    <span class="tab-icon">▸</span>
+                    SPIELER
                 </button>
             </div>
 
@@ -40,7 +40,7 @@
                 <div id="weapons-tab" class="tab-content active">
                     <div class="controls-row">
                         <div class="search-box">
-                            <input type="text" id="weapon-search" placeholder="🔍 Waffe suchen..." oninput="filterWeapons()">
+                            <input type="text" id="weapon-search" placeholder="Waffe suchen..." oninput="filterWeapons()">
                         </div>
                         <div class="category-filter">
                             <select id="weapon-category" onchange="filterWeapons()">
@@ -55,7 +55,7 @@
                     
                     <div class="action-buttons">
                         <button class="btn btn-danger" onclick="removeAllWeapons()">
-                            <span class="btn-icon">🗑️</span>
+                            <span class="btn-icon">×</span>
                             Alle Waffen entfernen
                         </button>
                     </div>
@@ -67,7 +67,7 @@
                 <div id="items-tab" class="tab-content">
                     <div class="controls-row">
                         <div class="search-box">
-                            <input type="text" id="item-search" placeholder="🔍 Item suchen..." oninput="filterItems()">
+                            <input type="text" id="item-search" placeholder="Item suchen..." oninput="filterItems()">
                         </div>
                         <div class="amount-input">
                             <label>Anzahl:</label>
@@ -82,13 +82,13 @@
                 <div id="players-tab" class="tab-content">
                     <div class="controls-row">
                         <button class="btn btn-primary" onclick="refreshPlayers()">
-                            <span class="btn-icon">🔄</span>
+                            <span class="btn-icon">↻</span>
                             Spielerliste aktualisieren
                         </button>
                     </div>
 
                     <div class="info-box">
-                        <p>📍 Zeigt Spieler in einem Umkreis von 50m</p>
+                        <p>Zeigt Spieler in einem Umkreis von 50m</p>
                     </div>
 
                     <div id="players-list" class="players-list"></div>
@@ -97,7 +97,7 @@
 
             <!-- Footer -->
             <div class="footer">
-                <p>Drücke <kbd>F9</kbd> zum Schließen | Version 1.0.0</p>
+                <p>Drücke <kbd>ESC</kbd> zum Schließen | Version 1.0.2</p>
             </div>
         </div>
     </div>
