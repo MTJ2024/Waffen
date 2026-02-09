@@ -33,7 +33,7 @@ end)
 -- Key Press Handler
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(0)
+        Citizen.Wait(100)
         
         if IsControlJustReleased(0, 56) then -- F9 key (56)
             if isAuthorized then

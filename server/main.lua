@@ -57,7 +57,7 @@ AddEventHandler('waffen:spawnItem', function(itemName, amount)
     end
     
     TriggerClientEvent('waffen:receiveItem', source, itemName, amount or 1)
-    print("Item spawned: " .. itemName .. " x" .. amount .. " for player: " .. source)
+    print("Item spawned: " .. itemName .. " x" .. (amount or 1) .. " for player: " .. source)
 end)
 
 -- Give item to another player
@@ -71,7 +71,7 @@ AddEventHandler('waffen:giveItem', function(targetId, itemName, amount)
     end
     
     TriggerClientEvent('waffen:receiveItem', targetId, itemName, amount or 1)
-    print("Item given: " .. itemName .. " x" .. amount .. " from player: " .. source .. " to player: " .. targetId)
+    print("Item given: " .. itemName .. " x" .. (amount or 1) .. " from player: " .. source .. " to player: " .. targetId)
 end)
 
 print("^2[Waffen Management System] ^7Server loaded successfully^0")

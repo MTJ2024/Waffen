@@ -44,7 +44,7 @@ function GetParentResourceName() {
 }
 
 // Switch Tab
-function switchTab(tabName) {
+function switchTab(tabName, clickedElement) {
     // Remove active from all tabs
     const tabs = document.querySelectorAll('.tab-btn');
     const contents = document.querySelectorAll('.tab-content');
@@ -53,7 +53,16 @@ function switchTab(tabName) {
     contents.forEach(content => content.classList.remove('active'));
     
     // Add active to selected tab
-    event.target.classList.add('active');
+    if (clickedElement) {
+        clickedElement.classList.add('active');
+    } else {
+        // Fallback: find the button by tab name
+        tabs.forEach(tab => {
+            if (tab.textContent.toLowerCase().includes(tabName.toLowerCase())) {
+                tab.classList.add('active');
+            }
+        });
+    }
     document.getElementById(tabName + '-tab').classList.add('active');
     
     // Load data for the tab
