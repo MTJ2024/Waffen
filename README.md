@@ -38,15 +38,32 @@ Ein professionelles Waffen- und Munitions-Verwaltungssystem für FiveM Server mi
 
 1. Lade das Resource herunter
 2. Kopiere den `Waffen` Ordner in deinen FiveM Server `resources` Ordner
-3. Öffne die `config.lua` und füge deine Steam ID oder License ID hinzu:
+3. **Wichtig**: Finde deine License ID (siehe unten)
+4. Öffne die `config.lua` und füge deine License ID hinzu:
 ```lua
 Config.AuthorizedPlayers = {
-    "steam:110000xxxxxxxx",
-    "license:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "license:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",  -- Deine License ID
 }
 ```
-4. Füge `ensure Waffen` zu deiner `server.cfg` hinzu
-5. Starte deinen Server
+5. Füge `ensure Waffen` zu deiner `server.cfg` hinzu
+6. Starte deinen Server
+
+### 🔍 License ID finden
+
+**Methode 1: Debug Helper (Einfachste Methode)**
+1. Verbinde dich mit deinem Server
+2. Schaue in die **Server Console** (nicht F8!)
+3. Du siehst: `Player Connecting: DeinName (license:xxxxx...)`
+4. Kopiere die komplette License ID
+
+**Methode 2: Mit Debug Script**
+1. Öffne `fxmanifest.lua`
+2. Füge `'debug_ids.lua'` zu den `server_scripts` hinzu
+3. Restart Waffen
+4. Verbinde dich - Deine IDs werden in der Console angezeigt!
+5. Entferne `debug_ids.lua` wieder nach dem Kopieren
+
+Siehe **TROUBLESHOOTING.md** für detaillierte Hilfe!
 
 ## 🎮 Verwendung
 
