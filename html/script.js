@@ -106,7 +106,7 @@ function closeUI() {
     const container = document.getElementById('container');
     container.classList.add('hidden');
     
-    fetch(`https://${GetParentResourceName()}/closeUI`, {
+    fetch(`https://${getResourceName()}/closeUI`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -134,12 +134,19 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Get resource name - IMPROVED with multiple detection methods
-function GetParentResourceName() {
-    // Method 1: Try FiveM's native function (most reliable in-game)
-    if (window.GetParentResourceName) {
-        const resourceName = window.GetParentResourceName();
-        console.log('[Waffen UI] ✅ Resource name from native function:', resourceName);
-        return resourceName;
+function getResourceName() {
+    // CRITICAL FIX: Check if FiveM native exists (avoid recursion!)
+    // The native FiveM function is on window, our function has different name
+    if (window.GetParentResourceName && typeof window.GetParentResourceName === 'function') {
+        try {
+            const resourceName = window.GetParentResourceName();
+            if (resourceName && resourceName !== 'getResourceName') {
+                console.log('[Waffen UI] ✅ Resource name from FiveM native:', resourceName);
+                return resourceName;
+            }
+        } catch (e) {
+            console.warn('[Waffen UI] ⚠️ Could not call FiveM native:', e);
+        }
     }
     
     // Method 2: Parse from URL
@@ -211,7 +218,7 @@ function switchTab(tabName, clickedElement) {
 
 // Load Weapons
 function loadWeapons() {
-    const resourceName = GetParentResourceName();
+    const resourceName = getResourceName();
     const fetchUrl = `https://${resourceName}/getWeapons`;
     
     console.log('[Waffen UI] Loading weapons...');
@@ -332,7 +339,7 @@ function spawnWeaponWithSettings(weaponName, buttonElement) {
     const amount = parseInt(card.querySelector('.weapon-amount-input').value) || 1;
     const ammo = parseInt(card.querySelector('.weapon-ammo-input').value) || 250;
     
-    fetch(`https://${GetParentResourceName()}/spawnWeapon`, {
+    fetch(`https://${getResourceName()}/spawnWeapon`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -356,7 +363,7 @@ function spawnWeaponWithSettings(weaponName, buttonElement) {
 function spawnWeapon(weaponName) {
     const ammo = parseInt(document.getElementById('weapon-ammo').value) || 250;
     
-    fetch(`https://${GetParentResourceName()}/spawnWeapon`, {
+    fetch(`https://${getResourceName()}/spawnWeapon`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -397,7 +404,7 @@ function confirmAmmo(shouldSpawn) {
     if (shouldSpawn && pendingWeaponForAmmo) {
         const ammoAmount = document.getElementById('ammo-amount').value;
         
-        fetch(`https://${GetParentResourceName()}/spawnWeaponAmmo`, {
+        fetch(`https://${getResourceName()}/spawnWeaponAmmo`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -422,7 +429,7 @@ function confirmAmmo(shouldSpawn) {
 // Remove All Weapons
 function removeAllWeapons() {
     if (confirm('Möchtest du wirklich alle Waffen entfernen?')) {
-        fetch(`https://${GetParentResourceName()}/removeAllWeapons`, {
+        fetch(`https://${getResourceName()}/removeAllWeapons`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -434,7 +441,7 @@ function removeAllWeapons() {
 
 // Load Items
 function loadItems() {
-    const resourceName = GetParentResourceName();
+    const resourceName = getResourceName();
     const fetchUrl = `https://${resourceName}/getItems`;
     
     console.log('[Waffen UI] Loading items...');
@@ -546,7 +553,7 @@ function spawnItemWithAmount(itemName, buttonElement) {
     const card = buttonElement.closest('.item-card');
     const amount = parseInt(card.querySelector('.item-amount-input').value) || 1;
     
-    fetch(`https://${GetParentResourceName()}/spawnItem`, {
+    fetch(`https://${getResourceName()}/spawnItem`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -569,7 +576,7 @@ function spawnItemWithAmount(itemName, buttonElement) {
 function spawnItem(itemName) {
     const amount = parseInt(document.getElementById('item-amount').value) || 1;
     
-    fetch(`https://${GetParentResourceName()}/spawnItem`, {
+    fetch(`https://${getResourceName()}/spawnItem`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -590,7 +597,7 @@ function loadPlayers() {
 function refreshPlayers() {
     console.log('[Waffen UI] Loading/Refreshing players...');
     
-    fetch(`https://${GetParentResourceName()}/getPlayers`, {
+    fetch(`https://${getResourceName()}/getPlayers`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -747,7 +754,7 @@ function giveWeaponToPlayer(playerId) {
     
     const ammo = parseInt(document.getElementById('weapon-ammo').value) || 250;
     
-    fetch(`https://${GetParentResourceName()}/giveWeapon`, {
+    fetch(`https://${getResourceName()}/giveWeapon`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -774,7 +781,7 @@ function giveItemToPlayer(playerId) {
     
     const amount = parseInt(document.getElementById('item-amount').value) || 1;
     
-    fetch(`https://${GetParentResourceName()}/giveItem`, {
+    fetch(`https://${getResourceName()}/giveItem`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
