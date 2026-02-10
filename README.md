@@ -49,6 +49,19 @@ Config.AuthorizedPlayers = {
 6. Füge `ensure Waffen` zu deiner `server.cfg` hinzu
 7. Starte deinen Server
 
+## 📖 Dokumentation
+
+**Vollständige Dokumentation:** Siehe [docs/INDEX.md](docs/INDEX.md)
+
+**Wichtigste Guides:**
+- [INSTALLATION.md](INSTALLATION.md) - Detaillierte Installation
+- [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) - Problemlösungen
+- [docs/FEATURES.md](docs/FEATURES.md) - Alle Features
+- [docs/CACHE_PROBLEM_FIX.md](docs/CACHE_PROBLEM_FIX.md) - Cache-Probleme
+- [docs/QUICK_TEST.md](docs/QUICK_TEST.md) - Schnell-Tests
+
+**Alle 25+ Dokumentationsdateien:** [docs/](docs/)
+
 ### ⚠️ KRITISCH: Resource-Name muss "Waffen" sein!
 
 Dein Ordner MUSS genau **"Waffen"** heißen (mit großem W), sonst gibt es `TypeError: Failed to fetch` Fehler.
