@@ -239,8 +239,18 @@ function displayWeapons() {
                     <div class="item-category">${category}</div>
                 </div>
                 <div class="item-id">${weapon.name}</div>
+                <div class="item-controls">
+                    <div class="control-group">
+                        <label>Anzahl:</label>
+                        <input type="number" class="weapon-amount-input" value="1" min="1" max="99" />
+                    </div>
+                    <div class="control-group">
+                        <label>Munition:</label>
+                        <input type="number" class="weapon-ammo-input" value="250" min="0" max="9999" />
+                    </div>
+                </div>
                 <div class="item-actions">
-                    <button class="btn btn-success" onclick="spawnWeapon('${weapon.name}')">
+                    <button class="btn btn-success" onclick="spawnWeaponWithSettings('${weapon.name}', this)">
                         <span class="btn-icon">+</span>
                         Spawnen
                     </button>
@@ -266,7 +276,33 @@ function filterWeapons() {
     displayWeapons();
 }
 
-// Spawn Weapon for Self - NOW WITH AMMO PROMPT
+// Spawn Weapon with individual settings
+function spawnWeaponWithSettings(weaponName, buttonElement) {
+    const card = buttonElement.closest('.item-card');
+    const amount = parseInt(card.querySelector('.weapon-amount-input').value) || 1;
+    const ammo = parseInt(card.querySelector('.weapon-ammo-input').value) || 250;
+    
+    fetch(`https://${GetParentResourceName()}/spawnWeapon`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            weapon: weaponName,
+            amount: amount,
+            ammo: ammo
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('[Waffen UI] Weapon spawned:', weaponName, 'Amount:', amount, 'Ammo:', ammo);
+    })
+    .catch(error => {
+        console.error('[Waffen UI] Error spawning weapon:', error);
+    });
+}
+
+// Old spawn weapon function (kept for compatibility)
 function spawnWeapon(weaponName) {
     const ammo = parseInt(document.getElementById('weapon-ammo').value) || 250;
     
@@ -277,6 +313,7 @@ function spawnWeapon(weaponName) {
         },
         body: JSON.stringify({
             weapon: weaponName,
+            amount: 1,
             ammo: ammo
         })
     })
@@ -390,6 +427,67 @@ function displayItems() {
     
     itemsList.innerHTML = '';
     
+    // Group items by category
+    const categorizedItems = {};
+    itemsData.forEach(item => {
+        const category = item.category || 'Sonstiges';
+        if (!categorizedItems[category]) {
+            categorizedItems[category] = [];
+        }
+        categorizedItems[category].push(item);
+    });
+    
+    // Sort categories alphabetically
+    const sortedCategories = Object.keys(categorizedItems).sort();
+    
+    let hasItems = false;
+    
+    sortedCategories.forEach(category => {
+        categorizedItems[category].forEach(item => {
+            if (searchTerm && !item.label.toLowerCase().includes(searchTerm) && !item.name.toLowerCase().includes(searchTerm)) {
+                return;
+            }
+            
+            hasItems = true;
+            
+            const itemCard = document.createElement('div');
+            itemCard.className = 'item-card';
+            itemCard.innerHTML = `
+                <div class="item-card-header">
+                    <div class="item-name">${item.label}</div>
+                    <div class="item-category">${category}</div>
+                </div>
+                <div class="item-id">${item.name}</div>
+                <div class="item-controls">
+                    <div class="control-group">
+                        <label>Anzahl:</label>
+                        <input type="number" class="item-amount-input" value="1" min="1" max="999" />
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-success" onclick="spawnItemWithAmount('${item.name}', this)">
+                        <span class="btn-icon">+</span>
+                        Spawnen
+                    </button>
+                </div>
+            `;
+            itemsList.appendChild(itemCard);
+        });
+    });
+    
+    if (!hasItems) {
+        itemsList.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📦</div>
+                <h3>Keine Items gefunden</h3>
+                <p>Versuche einen anderen Suchbegriff</p>
+            </div>
+        `;
+    }
+}
+    
+    itemsList.innerHTML = '';
+    
     let hasItems = false;
     
     // Group items by category
@@ -448,7 +546,31 @@ function filterItems() {
     displayItems();
 }
 
-// Spawn Item for Self
+// Spawn Item with custom amount
+function spawnItemWithAmount(itemName, buttonElement) {
+    const card = buttonElement.closest('.item-card');
+    const amount = parseInt(card.querySelector('.item-amount-input').value) || 1;
+    
+    fetch(`https://${GetParentResourceName()}/spawnItem`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            item: itemName,
+            amount: amount
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('[Waffen UI] Item spawned:', itemName, 'Amount:', amount);
+    })
+    .catch(error => {
+        console.error('[Waffen UI] Error spawning item:', error);
+    });
+}
+
+// Old spawn item function (kept for compatibility)
 function spawnItem(itemName) {
     const amount = parseInt(document.getElementById('item-amount').value) || 1;
     
