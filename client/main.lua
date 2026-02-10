@@ -120,8 +120,30 @@ end)
 
 -- Spawn weapon for self
 RegisterNUICallback('spawnWeapon', function(data, cb)
-    TriggerServerEvent('waffen:spawnWeapon', data.weapon, data.ammo)
-    cb('ok')
+    local weaponName = data.weapon
+    local amount = data.amount or 1
+    local ammo = data.ammo or Config.DefaultAmmo
+    
+    -- Spawn weapon multiple times if amount > 1
+    for i = 1, amount do
+        TriggerServerEvent('waffen:spawnWeapon', weaponName, ammo)
+    end
+    
+    cb({success = true, weapon = weaponName, amount = amount})
+end)
+
+-- Spawn weapon ammo (from ammo dialog)
+RegisterNUICallback('spawnWeaponAmmo', function(data, cb)
+    local weaponName = data.weapon
+    local ammoAmount = data.amount or 250
+    
+    -- Get ammo item name from config
+    local ammoItem = Config.WeaponAmmo[weaponName]
+    if ammoItem then
+        TriggerServerEvent('waffen:spawnItem', ammoItem, ammoAmount)
+    end
+    
+    cb({success = true})
 end)
 
 -- Give weapon to player
