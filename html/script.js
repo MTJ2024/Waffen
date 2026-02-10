@@ -544,61 +544,6 @@ function displayItems() {
         `;
     }
 }
-    
-    itemsList.innerHTML = '';
-    
-    let hasItems = false;
-    
-    // Group items by category
-    const itemsByCategory = {};
-    itemsData.forEach(item => {
-        const category = item.category || 'Sonstiges';
-        if (!itemsByCategory[category]) {
-            itemsByCategory[category] = [];
-        }
-        itemsByCategory[category].push(item);
-    });
-    
-    // Display items grouped by category
-    Object.keys(itemsByCategory).sort().forEach(category => {
-        const items = itemsByCategory[category];
-        
-        items.forEach(item => {
-            if (searchTerm && !item.label.toLowerCase().includes(searchTerm) && !item.name.toLowerCase().includes(searchTerm)) {
-                return;
-            }
-            
-            hasItems = true;
-            
-            const itemCard = document.createElement('div');
-            itemCard.className = 'item-card';
-            itemCard.innerHTML = `
-                <div class="item-card-header">
-                    <div class="item-name">${item.label}</div>
-                    <div class="item-category">${category}</div>
-                </div>
-                <div class="item-id">${item.name}</div>
-                <div class="item-actions">
-                    <button class="btn btn-success" onclick="spawnItem('${item.name}')">
-                        <span class="btn-icon">+</span>
-                        Spawnen
-                    </button>
-                </div>
-            `;
-            itemsList.appendChild(itemCard);
-        });
-    });
-    
-    if (!hasItems) {
-        itemsList.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-state-icon">📦</div>
-                <h3>Keine Items gefunden</h3>
-                <p>Versuche einen anderen Suchbegriff</p>
-            </div>
-        `;
-    }
-}
 
 // Filter Items
 function filterItems() {
