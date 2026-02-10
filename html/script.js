@@ -122,27 +122,45 @@ function switchTab(tabName, clickedElement) {
 
 // Load Weapons
 function loadWeapons() {
+    console.log('[Waffen UI] Loading weapons...');
+    
     fetch(`https://${GetParentResourceName()}/getWeapons`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({})
-    }).then(response => response.json()).then(data => {
-        weaponsData = data.weapons;
+    })
+    .then(response => {
+        console.log('[Waffen UI] Response received:', response);
+        return response.json();
+    })
+    .then(data => {
+        console.log('[Waffen UI] Weapons data received:', data);
         
-        // Populate category filter
-        const categorySelect = document.getElementById('weapon-category');
-        categorySelect.innerHTML = '<option value="all">Alle Kategorien</option>';
-        
-        Object.keys(weaponsData).forEach(category => {
-            const option = document.createElement('option');
-            option.value = category;
-            option.textContent = category;
-            categorySelect.appendChild(option);
-        });
-        
-        displayWeapons();
+        if (data && data.weapons) {
+            weaponsData = data.weapons;
+            
+            // Populate category filter
+            const categorySelect = document.getElementById('weapon-category');
+            categorySelect.innerHTML = '<option value="all">Alle Kategorien</option>';
+            
+            Object.keys(weaponsData).forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categorySelect.appendChild(option);
+            });
+            
+            displayWeapons();
+        } else {
+            console.error('[Waffen UI] Invalid weapons data format');
+            showError('Fehler beim Laden der Waffen');
+        }
+    })
+    .catch(error => {
+        console.error('[Waffen UI] Error loading weapons:', error);
+        showError('Waffen konnten nicht geladen werden. Überprüfe die Console (F8).');
     });
 }
 
@@ -234,15 +252,33 @@ function removeAllWeapons() {
 
 // Load Items
 function loadItems() {
+    console.log('[Waffen UI] Loading items...');
+    
     fetch(`https://${GetParentResourceName()}/getItems`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({})
-    }).then(response => response.json()).then(data => {
-        itemsData = data.items;
-        displayItems();
+    })
+    .then(response => {
+        console.log('[Waffen UI] Items response received:', response);
+        return response.json();
+    })
+    .then(data => {
+        console.log('[Waffen UI] Items data received:', data);
+        
+        if (data && data.items) {
+            itemsData = data.items;
+            displayItems();
+        } else {
+            console.error('[Waffen UI] Invalid items data format');
+            showError('Fehler beim Laden der Items');
+        }
+    })
+    .catch(error => {
+        console.error('[Waffen UI] Error loading items:', error);
+        showError('Items konnten nicht geladen werden. Überprüfe die Console (F8).');
     });
 }
 
@@ -255,34 +291,50 @@ function displayItems() {
     
     let hasItems = false;
     
+    // Group items by category
+    const itemsByCategory = {};
     itemsData.forEach(item => {
-        if (searchTerm && !item.label.toLowerCase().includes(searchTerm) && !item.name.toLowerCase().includes(searchTerm)) {
-            return;
+        const category = item.category || 'Sonstiges';
+        if (!itemsByCategory[category]) {
+            itemsByCategory[category] = [];
         }
+        itemsByCategory[category].push(item);
+    });
+    
+    // Display items grouped by category
+    Object.keys(itemsByCategory).sort().forEach(category => {
+        const items = itemsByCategory[category];
         
-        hasItems = true;
-        
-        const itemCard = document.createElement('div');
-        itemCard.className = 'item-card';
-        itemCard.innerHTML = `
-            <div class="item-card-header">
-                <div class="item-name">${item.label}</div>
-            </div>
-            <div class="item-id">${item.name}</div>
-            <div class="item-actions">
-                <button class="btn btn-success" onclick="spawnItem('${item.name}')">
-                    <span class="btn-icon">+</span>
-                    Spawnen
-                </button>
-            </div>
-        `;
-        itemsList.appendChild(itemCard);
+        items.forEach(item => {
+            if (searchTerm && !item.label.toLowerCase().includes(searchTerm) && !item.name.toLowerCase().includes(searchTerm)) {
+                return;
+            }
+            
+            hasItems = true;
+            
+            const itemCard = document.createElement('div');
+            itemCard.className = 'item-card';
+            itemCard.innerHTML = `
+                <div class="item-card-header">
+                    <div class="item-name">${item.label}</div>
+                    <div class="item-category">${category}</div>
+                </div>
+                <div class="item-id">${item.name}</div>
+                <div class="item-actions">
+                    <button class="btn btn-success" onclick="spawnItem('${item.name}')">
+                        <span class="btn-icon">+</span>
+                        Spawnen
+                    </button>
+                </div>
+            `;
+            itemsList.appendChild(itemCard);
+        });
     });
     
     if (!hasItems) {
         itemsList.innerHTML = `
             <div class="empty-state">
-                <div class="empty-state-icon">-</div>
+                <div class="empty-state-icon">📦</div>
                 <h3>Keine Items gefunden</h3>
                 <p>Versuche einen anderen Suchbegriff</p>
             </div>
@@ -318,16 +370,60 @@ function loadPlayers() {
 
 // Refresh Players
 function refreshPlayers() {
+    console.log('[Waffen UI] Loading/Refreshing players...');
+    
     fetch(`https://${GetParentResourceName()}/getPlayers`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({})
-    }).then(response => response.json()).then(data => {
-        playersData = data.players;
-        displayPlayers();
+    })
+    .then(response => {
+        console.log('[Waffen UI] Players response received:', response);
+        return response.json();
+    })
+    .then(data => {
+        console.log('[Waffen UI] Players data received:', data);
+        
+        if (data && data.players) {
+            playersData = data.players;
+            displayPlayers();
+        } else {
+            console.error('[Waffen UI] Invalid players data format');
+            showError('Fehler beim Laden der Spieler');
+        }
+    })
+    .catch(error => {
+        console.error('[Waffen UI] Error loading players:', error);
+        const playersList = document.getElementById('players-list');
+        if (playersList) {
+            playersList.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">⚠️</div>
+                    <h3>Fehler</h3>
+                    <p>Spieler konnten nicht geladen werden</p>
+                    <p style="font-size: 11px; margin-top: 10px;">Drücke F8 für Details</p>
+                </div>
+            `;
+        }
     });
+}
+
+// Show error message
+function showError(message) {
+    console.error('[Waffen UI] Error:', message);
+    const weaponsList = document.getElementById('weapons-list');
+    if (weaponsList && weaponsList.innerHTML === '') {
+        weaponsList.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">⚠️</div>
+                <h3>Fehler</h3>
+                <p>${message}</p>
+                <p style="font-size: 11px; margin-top: 10px;">Drücke F8 und schaue in die Console für Details</p>
+            </div>
+        `;
+    }
 }
 
 // Display Players

@@ -156,15 +156,140 @@ Config.Weapons = {
     {name = "WEAPON_FERTILIZERCAN", label = "Fertilizer Can", category = "Spezial"},
 }
 
+-- ═══════════════════════════════════════════════════════════════
+-- ITEMS: Waffen als Items + Munition + Sonstiges
+-- ═══════════════════════════════════════════════════════════════
 Config.Items = {
-    {name = "bandage", label = "Verband"},
-    {name = "medkit", label = "Erste-Hilfe-Kasten"},
-    {name = "water", label = "Wasser"},
-    {name = "bread", label = "Brot"},
-    {name = "phone", label = "Telefon"},
-    {name = "radio", label = "Funkgerät"},
-    {name = "lockpick", label = "Dietrich"},
-    {name = "repairkit", label = "Reparaturkit"},
-    {name = "armor", label = "Schutzweste"},
-    {name = "parachute", label = "Fallschirm"},
+    -- ═══ MUNITION ═══
+    {name = "ammo_pistol", label = "Pistolen Munition", category = "Munition"},
+    {name = "ammo_smg", label = "SMG Munition", category = "Munition"},
+    {name = "ammo_rifle", label = "Gewehr Munition", category = "Munition"},
+    {name = "ammo_shotgun", label = "Schrotflinte Munition", category = "Munition"},
+    {name = "ammo_sniper", label = "Sniper Munition", category = "Munition"},
+    {name = "ammo_mg", label = "MG Munition", category = "Munition"},
+    {name = "ammo_rocket", label = "Raketen Munition", category = "Munition"},
+    {name = "ammo_grenade", label = "Granaten", category = "Munition"},
+    {name = "ammo_50cal", label = ".50 Cal Munition", category = "Munition"},
+    {name = "ammo_armor_piercing", label = "Panzerbrechende Munition", category = "Munition"},
+    
+    -- ═══ WAFFEN ALS ITEMS (PISTOLEN) ═══
+    {name = "weapon_pistol", label = "Pistol (Item)", category = "Waffen-Items"},
+    {name = "weapon_pistol_mk2", label = "Pistol Mk II (Item)", category = "Waffen-Items"},
+    {name = "weapon_combatpistol", label = "Combat Pistol (Item)", category = "Waffen-Items"},
+    {name = "weapon_appistol", label = "AP Pistol (Item)", category = "Waffen-Items"},
+    {name = "weapon_pistol50", label = "Pistol .50 (Item)", category = "Waffen-Items"},
+    {name = "weapon_snspistol", label = "SNS Pistol (Item)", category = "Waffen-Items"},
+    {name = "weapon_heavypistol", label = "Heavy Pistol (Item)", category = "Waffen-Items"},
+    {name = "weapon_vintagepistol", label = "Vintage Pistol (Item)", category = "Waffen-Items"},
+    {name = "weapon_revolver", label = "Heavy Revolver (Item)", category = "Waffen-Items"},
+    {name = "weapon_revolver_mk2", label = "Heavy Revolver Mk II (Item)", category = "Waffen-Items"},
+    
+    -- ═══ WAFFEN ALS ITEMS (SMGS) ═══
+    {name = "weapon_microsmg", label = "Micro SMG (Item)", category = "Waffen-Items"},
+    {name = "weapon_smg", label = "SMG (Item)", category = "Waffen-Items"},
+    {name = "weapon_smg_mk2", label = "SMG Mk II (Item)", category = "Waffen-Items"},
+    {name = "weapon_assaultsmg", label = "Assault SMG (Item)", category = "Waffen-Items"},
+    {name = "weapon_combatpdw", label = "Combat PDW (Item)", category = "Waffen-Items"},
+    {name = "weapon_machinepistol", label = "Machine Pistol (Item)", category = "Waffen-Items"},
+    {name = "weapon_minismg", label = "Mini SMG (Item)", category = "Waffen-Items"},
+    {name = "weapon_tecpistol", label = "Tactical SMG (Item)", category = "Waffen-Items"},
+    
+    -- ═══ WAFFEN ALS ITEMS (SCHROTFLINTEN) ═══
+    {name = "weapon_pumpshotgun", label = "Pump Shotgun (Item)", category = "Waffen-Items"},
+    {name = "weapon_pumpshotgun_mk2", label = "Pump Shotgun Mk II (Item)", category = "Waffen-Items"},
+    {name = "weapon_sawnoffshotgun", label = "Sawed-Off Shotgun (Item)", category = "Waffen-Items"},
+    {name = "weapon_assaultshotgun", label = "Assault Shotgun (Item)", category = "Waffen-Items"},
+    {name = "weapon_bullpupshotgun", label = "Bullpup Shotgun (Item)", category = "Waffen-Items"},
+    {name = "weapon_heavyshotgun", label = "Heavy Shotgun (Item)", category = "Waffen-Items"},
+    {name = "weapon_dbshotgun", label = "Double Barrel Shotgun (Item)", category = "Waffen-Items"},
+    {name = "weapon_combatshotgun", label = "Combat Shotgun (Item)", category = "Waffen-Items"},
+    
+    -- ═══ WAFFEN ALS ITEMS (STURMGEWEHRE) ═══
+    {name = "weapon_assaultrifle", label = "Assault Rifle (Item)", category = "Waffen-Items"},
+    {name = "weapon_assaultrifle_mk2", label = "Assault Rifle Mk II (Item)", category = "Waffen-Items"},
+    {name = "weapon_carbinerifle", label = "Carbine Rifle (Item)", category = "Waffen-Items"},
+    {name = "weapon_carbinerifle_mk2", label = "Carbine Rifle Mk II (Item)", category = "Waffen-Items"},
+    {name = "weapon_advancedrifle", label = "Advanced Rifle (Item)", category = "Waffen-Items"},
+    {name = "weapon_specialcarbine", label = "Special Carbine (Item)", category = "Waffen-Items"},
+    {name = "weapon_specialcarbine_mk2", label = "Special Carbine Mk II (Item)", category = "Waffen-Items"},
+    {name = "weapon_bullpuprifle", label = "Bullpup Rifle (Item)", category = "Waffen-Items"},
+    {name = "weapon_bullpuprifle_mk2", label = "Bullpup Rifle Mk II (Item)", category = "Waffen-Items"},
+    {name = "weapon_compactrifle", label = "Compact Rifle (Item)", category = "Waffen-Items"},
+    {name = "weapon_militaryrifle", label = "Military Rifle (Item)", category = "Waffen-Items"},
+    {name = "weapon_heavyrifle", label = "Heavy Rifle (Item)", category = "Waffen-Items"},
+    {name = "weapon_tacticalrifle", label = "Tactical Rifle (Item)", category = "Waffen-Items"},
+    {name = "weapon_battlerifle", label = "Battle Rifle (Item)", category = "Waffen-Items"},
+    
+    -- ═══ WAFFEN ALS ITEMS (SCHARFSCHÜTZENGEWEHRE) ═══
+    {name = "weapon_sniperrifle", label = "Sniper Rifle (Item)", category = "Waffen-Items"},
+    {name = "weapon_heavysniper", label = "Heavy Sniper (Item)", category = "Waffen-Items"},
+    {name = "weapon_heavysniper_mk2", label = "Heavy Sniper Mk II (Item)", category = "Waffen-Items"},
+    {name = "weapon_marksmanrifle", label = "Marksman Rifle (Item)", category = "Waffen-Items"},
+    {name = "weapon_marksmanrifle_mk2", label = "Marksman Rifle Mk II (Item)", category = "Waffen-Items"},
+    {name = "weapon_precisionrifle", label = "Precision Rifle (Item)", category = "Waffen-Items"},
+    
+    -- ═══ WAFFEN ALS ITEMS (SCHWERE WAFFEN) ═══
+    {name = "weapon_rpg", label = "RPG (Item)", category = "Waffen-Items"},
+    {name = "weapon_grenadelauncher", label = "Grenade Launcher (Item)", category = "Waffen-Items"},
+    {name = "weapon_minigun", label = "Minigun (Item)", category = "Waffen-Items"},
+    {name = "weapon_railgun", label = "Railgun (Item)", category = "Waffen-Items"},
+    {name = "weapon_hominglauncher", label = "Homing Launcher (Item)", category = "Waffen-Items"},
+    
+    -- ═══ WAFFEN ALS ITEMS (NAHKAMPF) ═══
+    {name = "weapon_knife", label = "Knife (Item)", category = "Waffen-Items"},
+    {name = "weapon_bat", label = "Baseball Bat (Item)", category = "Waffen-Items"},
+    {name = "weapon_crowbar", label = "Crowbar (Item)", category = "Waffen-Items"},
+    {name = "weapon_machete", label = "Machete (Item)", category = "Waffen-Items"},
+    {name = "weapon_switchblade", label = "Switchblade (Item)", category = "Waffen-Items"},
+    {name = "weapon_battleaxe", label = "Battle Axe (Item)", category = "Waffen-Items"},
+    
+    -- ═══ WURFWAFFEN ALS ITEMS ═══
+    {name = "weapon_grenade", label = "Grenade (Item)", category = "Waffen-Items"},
+    {name = "weapon_molotov", label = "Molotov Cocktail (Item)", category = "Waffen-Items"},
+    {name = "weapon_stickybomb", label = "Sticky Bomb (Item)", category = "Waffen-Items"},
+    {name = "weapon_proxmine", label = "Proximity Mine (Item)", category = "Waffen-Items"},
+    {name = "weapon_smokegrenade", label = "Smoke Grenade (Item)", category = "Waffen-Items"},
+    
+    -- ═══ WAFFENZUBEHÖR ═══
+    {name = "weapon_flashlight", label = "Taschenlampe Aufsatz", category = "Zubehör"},
+    {name = "weapon_scope", label = "Zielfernrohr", category = "Zubehör"},
+    {name = "weapon_suppressor", label = "Schalldämpfer", category = "Zubehör"},
+    {name = "weapon_grip", label = "Griff", category = "Zubehör"},
+    {name = "weapon_extended_mag", label = "Erweitertes Magazin", category = "Zubehör"},
+    {name = "weapon_skin_luxury", label = "Luxus Waffenskin", category = "Zubehör"},
+    {name = "weapon_skin_tactical", label = "Taktischer Waffenskin", category = "Zubehör"},
+    
+    -- ═══ MEDIZINISCHE ITEMS ═══
+    {name = "bandage", label = "Verband", category = "Medizin"},
+    {name = "medkit", label = "Erste-Hilfe-Kasten", category = "Medizin"},
+    {name = "painkillers", label = "Schmerzmittel", category = "Medizin"},
+    {name = "adrenaline", label = "Adrenalin", category = "Medizin"},
+    
+    -- ═══ NAHRUNG & GETRÄNKE ═══
+    {name = "water", label = "Wasser", category = "Nahrung"},
+    {name = "bread", label = "Brot", category = "Nahrung"},
+    {name = "sandwich", label = "Sandwich", category = "Nahrung"},
+    {name = "burger", label = "Burger", category = "Nahrung"},
+    {name = "cola", label = "Cola", category = "Nahrung"},
+    {name = "coffee", label = "Kaffee", category = "Nahrung"},
+    
+    -- ═══ WERKZEUGE ═══
+    {name = "phone", label = "Telefon", category = "Werkzeuge"},
+    {name = "radio", label = "Funkgerät", category = "Werkzeuge"},
+    {name = "lockpick", label = "Dietrich", category = "Werkzeuge"},
+    {name = "repairkit", label = "Reparaturkit", category = "Werkzeuge"},
+    {name = "binoculars", label = "Fernglas", category = "Werkzeuge"},
+    {name = "flashlight", label = "Taschenlampe", category = "Werkzeuge"},
+    
+    -- ═══ SCHUTZ ═══
+    {name = "armor", label = "Schutzweste", category = "Schutz"},
+    {name = "helmet", label = "Helm", category = "Schutz"},
+    {name = "gasmask", label = "Gasmaske", category = "Schutz"},
+    
+    -- ═══ SONSTIGES ═══
+    {name = "parachute", label = "Fallschirm", category = "Sonstiges"},
+    {name = "jerry_can", label = "Benzinkanister", category = "Sonstiges"},
+    {name = "fire_extinguisher", label = "Feuerlöscher", category = "Sonstiges"},
+    {name = "rope", label = "Seil", category = "Sonstiges"},
+    {name = "handcuffs", label = "Handschellen", category = "Sonstiges"},
 }
