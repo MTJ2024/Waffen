@@ -4,22 +4,41 @@
 
 ESX = nil
 QBCore = nil
+OXInventory = false
 Framework = "standalone"
 
+-- Try to detect ox_inventory first (can work with ESX/QB-Core)
+local oxSuccess, oxExports = pcall(function()
+    return exports.ox_inventory
+end)
+if oxSuccess and oxExports then
+    OXInventory = true
+    print("^2[Waffen] ^7ox_inventory detected!^0")
+end
+
 -- Try to detect ESX
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+pcall(function()
+    TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+end)
 if ESX == nil then
     -- Try new ESX export
-    ESX = exports['es_extended']:getSharedObject()
+    pcall(function()
+        ESX = exports['es_extended']:getSharedObject()
+    end)
 end
 
 -- Try to detect QB-Core
 if not ESX then
-    QBCore = exports['qb-core']:GetCoreObject()
+    pcall(function()
+        QBCore = exports['qb-core']:GetCoreObject()
+    end)
 end
 
 -- Determine framework
-if ESX then
+if OXInventory then
+    Framework = "ox_inventory"
+    print("^2[Waffen] ^7Framework detected: ox_inventory^0")
+elseif ESX then
     Framework = "ESX"
     print("^2[Waffen] ^7Framework detected: ESX^0")
 elseif QBCore then
@@ -70,7 +89,17 @@ end
 
 -- Add item to player inventory
 function AddItem(source, itemName, amount)
-    if Framework == "ESX" then
+    if Framework == "ox_inventory" then
+        -- ox_inventory integration
+        local success = exports.ox_inventory:AddItem(source, itemName, amount)
+        if success then
+            print("^2[Waffen] ^7ox_inventory: Added " .. itemName .. " x" .. amount .. " to player " .. source .. "^0")
+            return true
+        else
+            print("^1[Waffen] ^7ox_inventory: Failed to add " .. itemName .. " - item might not exist in ox_inventory^0")
+            return false
+        end
+    elseif Framework == "ESX" then
         local xPlayer = ESX.GetPlayerFromId(source)
         if xPlayer then
             xPlayer.addInventoryItem(itemName, amount)
@@ -95,7 +124,22 @@ end
 
 -- Add weapon to player
 function AddWeapon(source, weaponName, ammo)
-    if Framework == "ESX" then
+    if Framework == "ox_inventory" then
+        -- ox_inventory uses weapon items with metadata
+        local metadata = {
+            ammo = ammo,
+            durability = 100,
+            serial = "WF-" .. math.random(100000, 999999)
+        }
+        local success = exports.ox_inventory:AddItem(source, weaponName, 1, metadata)
+        if success then
+            print("^2[Waffen] ^7ox_inventory: Added weapon " .. weaponName .. " with " .. ammo .. " ammo to player " .. source .. "^0")
+            return true
+        else
+            print("^1[Waffen] ^7ox_inventory: Failed to add weapon " .. weaponName .. " - weapon might not exist in ox_inventory^0")
+            return false
+        end
+    elseif Framework == "ESX" then
         local xPlayer = ESX.GetPlayerFromId(source)
         if xPlayer then
             xPlayer.addWeapon(weaponName, ammo)
