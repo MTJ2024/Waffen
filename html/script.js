@@ -8,43 +8,82 @@ let pendingWeaponForAmmo = null; // Für Munitions-Dialog
 window.addEventListener('message', function(event) {
     const data = event.data;
     
+    console.log('[Waffen UI] ✉️ Message received:', data);
+    
     if (data.action === 'toggle') {
         const container = document.getElementById('container');
+        console.log('[Waffen UI] 📦 Container element:', container);
+        
         if (data.show) {
-            console.log('[Waffen UI] 🔓 Opening UI - removing hidden class');
+            console.log('[Waffen UI] 🔓 OPENING UI NOW!');
+            
+            // SCHRITT 1: Klasse entfernen
             container.classList.remove('hidden');
+            console.log('[Waffen UI] ✅ Removed hidden class');
             
-            // Force display and visibility
-            container.style.display = 'flex';
-            container.style.opacity = '1';
-            container.style.visibility = 'visible';
-            container.style.pointerEvents = 'auto';
+            // SCHRITT 2: Inline styles ZWINGEND setzen
+            container.style.cssText = `
+                display: flex !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                z-index: 99999 !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                pointer-events: auto !important;
+                background: rgba(0, 0, 0, 0.85) !important;
+            `;
+            console.log('[Waffen UI] ✅ Set inline styles');
             
-            console.log('[Waffen UI] 📊 Container display:', window.getComputedStyle(container).display);
-            console.log('[Waffen UI] 📊 Container opacity:', window.getComputedStyle(container).opacity);
-            console.log('[Waffen UI] 📊 Container visibility:', window.getComputedStyle(container).visibility);
-            console.log('[Waffen UI] 📊 Container z-index:', window.getComputedStyle(container).zIndex);
+            // SCHRITT 3: Verify
+            setTimeout(() => {
+                const computed = window.getComputedStyle(container);
+                console.log('[Waffen UI] 📊 FINAL STATE:');
+                console.log('[Waffen UI] 📊 Display:', computed.display);
+                console.log('[Waffen UI] 📊 Position:', computed.position);
+                console.log('[Waffen UI] 📊 Opacity:', computed.opacity);
+                console.log('[Waffen UI] 📊 Visibility:', computed.visibility);
+                console.log('[Waffen UI] 📊 Z-Index:', computed.zIndex);
+                console.log('[Waffen UI] 📊 Width:', computed.width);
+                console.log('[Waffen UI] 📊 Height:', computed.height);
+            }, 100);
             
             loadWeapons();
             loadItems();
         } else {
-            console.log('[Waffen UI] 🔒 Closing UI - adding hidden class');
+            console.log('[Waffen UI] 🔒 CLOSING UI');
             container.classList.add('hidden');
-            
-            // Force hide
             container.style.display = 'none';
-            container.style.opacity = '0';
-            container.style.visibility = 'hidden';
-            container.style.pointerEvents = 'none';
         }
     }
 });
 
 // Enhanced mouse wheel support for smooth scrolling
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('[Waffen UI] 🎬 DOMContentLoaded - HTML is loaded!');
+    
+    // DEBUG TEST: Zeige Debug-Banner für 3 Sekunden
+    const debugTest = document.getElementById('debug-test');
+    if (debugTest) {
+        debugTest.style.display = 'block';
+        console.log('[Waffen UI] 🔴 DEBUG TEST Banner visible');
+        setTimeout(() => {
+            debugTest.style.display = 'none';
+            console.log('[Waffen UI] 🔴 DEBUG TEST Banner hidden');
+        }, 3000);
+    }
+    
     const weaponsList = document.getElementById('weapons-list');
     const itemsList = document.getElementById('items-list');
     const playersList = document.getElementById('players-list');
+    
+    console.log('[Waffen UI] 📋 Elements found:', {
+        weaponsList: !!weaponsList,
+        itemsList: !!itemsList,
+        playersList: !!playersList
+    });
     
     // Add smooth mouse wheel scrolling to all grids
     [weaponsList, itemsList, playersList].forEach(element => {

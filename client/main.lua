@@ -43,23 +43,30 @@ end)
 function ToggleUI()
     uiOpen = not uiOpen
     
-    -- Set NUI focus with slight delay to ensure it registers
-    Citizen.CreateThread(function()
-        SetNuiFocus(uiOpen, uiOpen)
-        
-        -- Send toggle message to NUI
-        SendNUIMessage({
-            action = "toggle",
-            show = uiOpen
-        })
-        
-        -- Debug message
-        if uiOpen then
-            print("^2[Waffen] ^7UI geöffnet^0")
-        else
-            print("^2[Waffen] ^7UI geschlossen^0")
-        end
-    end)
+    print("^3[Waffen DEBUG] ^7ToggleUI called, uiOpen =", uiOpen)
+    
+    -- Set NUI focus
+    SetNuiFocus(uiOpen, uiOpen)
+    print("^3[Waffen DEBUG] ^7SetNuiFocus called with:", uiOpen)
+    
+    -- Send toggle message to NUI
+    local message = {
+        action = "toggle",
+        show = uiOpen
+    }
+    print("^3[Waffen DEBUG] ^7Sending NUI message:", json.encode(message))
+    SendNUIMessage(message)
+    
+    -- Wait a tiny bit to ensure message is sent
+    Citizen.Wait(50)
+    
+    -- Debug message
+    if uiOpen then
+        print("^2[Waffen] ^7UI geöffnet^0")
+        print("^3[Waffen DEBUG] ^7NUI should now be VISIBLE. Check F8 console!^0")
+    else
+        print("^2[Waffen] ^7UI geschlossen^0")
+    end
 end
 
 -- Send weapons list to UI

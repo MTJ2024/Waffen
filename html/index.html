@@ -7,7 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="container" class="hidden">
+    <!-- DEBUG TEST: Dieser Button sollte IMMER sichtbar sein -->
+    <div id="debug-test" style="position: fixed; top: 10px; left: 10px; z-index: 999999; background: red; color: white; padding: 10px; display: none;">
+        DEBUG: NUI LÄUFT! Wenn du das siehst, funktioniert HTML!
+    </div>
+    
+    <!-- WICHTIG: Container startet OHNE hidden class für Debugging -->
+    <div id="container" class="hidden" style="display: none;">
         <div class="main-panel">
             <!-- Header -->
             <div class="header">
