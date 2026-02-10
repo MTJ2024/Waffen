@@ -71,7 +71,8 @@ RegisterNUICallback('getItems', function(data, cb)
     for _, item in ipairs(Config.Items) do
         table.insert(items, {
             name = item.name,
-            label = item.label
+            label = item.label,
+            category = item.category or "Sonstiges"
         })
     end
     cb({items = items})
