@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waffen Management</title>
+    <link rel="stylesheet" href="style_v2.css">
+</head>
+<body>
+    <!-- Main Container -->
+    <div id="app" class="hidden">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <path d="M16 2L4 8V16C4 23 16 30 16 30C16 30 28 23 28 16V8L16 2Z" stroke="#FFD700" stroke-width="2" fill="none"/>
+                        <path d="M16 10L12 12V16L16 18L20 16V12L16 10Z" fill="#FFD700"/>
+                    </svg>
+                </div>
+                <h1>WAFFEN MANAGEMENT</h1>
+            </div>
+            <div class="header-right">
+                <span class="version">v2.0.0</span>
+                <button class="close-btn" onclick="closeUI()">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="weapons">
+                <svg width="20" height="20" viewBox="0 0 20 20">
+                    <path d="M2 10L10 2L18 10L10 18L2 10Z" fill="currentColor"/>
+                </svg>
+                <span>WAFFEN</span>
+            </button>
+            <button class="tab-btn" data-tab="items">
+                <svg width="20" height="20" viewBox="0 0 20 20">
+                    <rect x="4" y="4" width="12" height="12" fill="currentColor"/>
+                </svg>
+                <span>ITEMS</span>
+            </button>
+            <button class="tab-btn" data-tab="players">
+                <svg width="20" height="20" viewBox="0 0 20 20">
+                    <circle cx="10" cy="7" r="3" fill="currentColor"/>
+                    <path d="M4 18C4 14 7 12 10 12C13 12 16 14 16 18" fill="currentColor"/>
+                </svg>
+                <span>SPIELER</span>
+            </button>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <!-- Weapons Tab -->
+            <div class="tab-content active" id="weapons-tab">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <svg width="16" height="16" viewBox="0 0 16 16">
+                            <circle cx="6" cy="6" r="4" stroke="currentColor" fill="none" stroke-width="2"/>
+                            <path d="M9 9L14 14" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <input type="text" id="weapon-search" placeholder="Waffe suchen...">
+                    </div>
+                    <select id="weapon-category" class="category-select">
+                        <option value="">Alle Kategorien</option>
+                        <option value="Pistolen">Pistolen</option>
+                        <option value="SMGs">SMGs</option>
+                        <option value="Schrotflinten">Schrotflinten</option>
+                        <option value="Sturmgewehre">Sturmgewehre</option>
+                        <option value="Maschinengewehre">Maschinengewehre</option>
+                        <option value="Scharfschützengewehre">Scharfschützengewehre</option>
+                        <option value="Schwere Waffen">Schwere Waffen</option>
+                        <option value="Wurfwaffen">Wurfwaffen</option>
+                        <option value="Nahkampf">Nahkampf</option>
+                        <option value="Spezial">Spezial</option>
+                    </select>
+                </div>
+                <div class="grid-container" id="weapons-grid">
+                    <!-- Weapons will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Items Tab -->
+            <div class="tab-content" id="items-tab">
+                <div class="toolbar">
+                    <div class="search-box">
+                        <svg width="16" height="16" viewBox="0 0 16 16">
+                            <circle cx="6" cy="6" r="4" stroke="currentColor" fill="none" stroke-width="2"/>
+                            <path d="M9 9L14 14" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <input type="text" id="item-search" placeholder="Item suchen...">
+                    </div>
+                    <select id="item-category" class="category-select">
+                        <option value="">Alle Kategorien</option>
+                        <option value="Munition">Munition</option>
+                        <option value="Waffen-Items">Waffen-Items</option>
+                        <option value="Zubehör">Zubehör</option>
+                        <option value="Medizin">Medizin</option>
+                        <option value="Nahrung">Nahrung</option>
+                        <option value="Werkzeuge">Werkzeuge</option>
+                        <option value="Schutz">Schutz</option>
+                        <option value="Sonstiges">Sonstiges</option>
+                    </select>
+                </div>
+                <div class="grid-container" id="items-grid">
+                    <!-- Items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Players Tab -->
+            <div class="tab-content" id="players-tab">
+                <div class="toolbar">
+                    <button class="refresh-btn" onclick="refreshPlayers()">
+                        <svg width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M14 8A6 6 0 1 1 2 8" stroke="currentColor" fill="none" stroke-width="2"/>
+                            <path d="M2 8L4 6L2 4" stroke="currentColor" fill="none" stroke-width="2"/>
+                        </svg>
+                        Aktualisieren
+                    </button>
+                </div>
+                <div class="players-list" id="players-list">
+                    <!-- Players will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Stats -->
+        <div class="footer">
+            <div class="stat">
+                <span class="stat-label">Waffen:</span>
+                <span class="stat-value" id="weapon-count">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Items:</span>
+                <span class="stat-value" id="item-count">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Spieler:</span>
+                <span class="stat-value" id="player-count">0</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script_v2.js"></script>
+</body>
+</html>
