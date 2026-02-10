@@ -10,14 +10,14 @@
 }
 
 :root {
-    /* Color Palette - Professional Dark Theme */
-    --bg-primary: #0f0f0f;
-    --bg-secondary: #1a1a1a;
-    --bg-tertiary: #242424;
-    --bg-hover: #2a2a2a;
+    /* Color Palette - NEUE NEON COLORS V3! */
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-tertiary: #1a1a1a;
+    --bg-hover: #252525;
     
-    --accent-primary: #10b981;
-    --accent-secondary: #3b82f6;
+    --accent-primary: #00ff88;
+    --accent-secondary: #00ccff;
     --accent-danger: #ef4444;
     --accent-warning: #f59e0b;
     
