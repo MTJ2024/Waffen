@@ -55,6 +55,8 @@ window.addEventListener('message', function(event) {
         } else {
             console.log('[Waffen UI] 🔒 CLOSING UI');
             container.classList.add('hidden');
+            // Remove ALL inline styles to ensure clean close
+            container.style.cssText = '';
             container.style.display = 'none';
         }
     }
@@ -63,17 +65,6 @@ window.addEventListener('message', function(event) {
 // Enhanced mouse wheel support for smooth scrolling
 document.addEventListener('DOMContentLoaded', function() {
     console.log('[Waffen UI] 🎬 DOMContentLoaded - HTML is loaded!');
-    
-    // DEBUG TEST: Zeige Debug-Banner für 3 Sekunden
-    const debugTest = document.getElementById('debug-test');
-    if (debugTest) {
-        debugTest.style.display = 'block';
-        console.log('[Waffen UI] 🔴 DEBUG TEST Banner visible');
-        setTimeout(() => {
-            debugTest.style.display = 'none';
-            console.log('[Waffen UI] 🔴 DEBUG TEST Banner hidden');
-        }, 3000);
-    }
     
     const weaponsList = document.getElementById('weapons-list');
     const itemsList = document.getElementById('items-list');

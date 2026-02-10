@@ -23,6 +23,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0) -- Check every frame for immediate response
         
+        -- F9 to toggle
         if IsControlJustReleased(0, 56) then -- F9 key (56)
             if isAuthorized then
                 ToggleUI()
@@ -33,6 +34,14 @@ Citizen.CreateThread(function()
                     multiline = true,
                     args = {"System", "Du hast keine Berechtigung für dieses Menü!"}
                 })
+                Citizen.Wait(200) -- Debounce
+            end
+        end
+        
+        -- ESC/Backspace to close when UI is open
+        if IsControlJustReleased(0, 177) then -- ESC/Backspace key (177)
+            if uiOpen then
+                ToggleUI()
                 Citizen.Wait(200) -- Debounce
             end
         end
