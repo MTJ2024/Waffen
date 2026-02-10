@@ -18,17 +18,17 @@ body {
 }
 
 #container {
-    /* ABSOLUTE POSITIONING - GARANTIERT SICHTBAR */
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
+    /* POSITIONING */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     
-    /* DISPLAY */
-    display: flex !important;
+    /* DISPLAY - NO !important to allow .hidden to work */
+    display: flex;
     justify-content: center;
     align-items: center;
     
@@ -36,21 +36,21 @@ body {
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(8px);
     
-    /* Z-INDEX ÜBER ALLEM */
-    z-index: 99999 !important;
+    /* Z-INDEX */
+    z-index: 99999;
     
     /* SICHTBARKEIT */
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
-/* Wenn NICHT hidden, dann GARANTIERT sichtbar */
+/* When NOT hidden, ensure visibility */
 #container:not(.hidden) {
-    display: flex !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .main-panel {
