@@ -11,11 +11,31 @@ window.addEventListener('message', function(event) {
     if (data.action === 'toggle') {
         const container = document.getElementById('container');
         if (data.show) {
+            console.log('[Waffen UI] 🔓 Opening UI - removing hidden class');
             container.classList.remove('hidden');
+            
+            // Force display and visibility
+            container.style.display = 'flex';
+            container.style.opacity = '1';
+            container.style.visibility = 'visible';
+            container.style.pointerEvents = 'auto';
+            
+            console.log('[Waffen UI] 📊 Container display:', window.getComputedStyle(container).display);
+            console.log('[Waffen UI] 📊 Container opacity:', window.getComputedStyle(container).opacity);
+            console.log('[Waffen UI] 📊 Container visibility:', window.getComputedStyle(container).visibility);
+            console.log('[Waffen UI] 📊 Container z-index:', window.getComputedStyle(container).zIndex);
+            
             loadWeapons();
             loadItems();
         } else {
+            console.log('[Waffen UI] 🔒 Closing UI - adding hidden class');
             container.classList.add('hidden');
+            
+            // Force hide
+            container.style.display = 'none';
+            container.style.opacity = '0';
+            container.style.visibility = 'hidden';
+            container.style.pointerEvents = 'none';
         }
     }
 });
