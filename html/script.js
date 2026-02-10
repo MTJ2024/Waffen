@@ -82,10 +82,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Get resource name
+// Get resource name - Standard FiveM NUI method
 function GetParentResourceName() {
-    let queryString = window.location.search;
-    return queryString.substring(1);
+    // Standard method: extract from nui://resource_name/ URL
+    const url = window.location.href;
+    
+    // Match nui://resource_name/
+    const match = url.match(/nui:\/\/([^\/]+)\//);
+    if (match && match[1]) {
+        console.log('[Waffen UI] Resource name detected:', match[1]);
+        return match[1];
+    }
+    
+    // Fallback for local testing
+    console.warn('[Waffen UI] Could not detect resource name, using fallback');
+    return 'Waffen';
 }
 
 // Switch Tab
@@ -122,9 +133,14 @@ function switchTab(tabName, clickedElement) {
 
 // Load Weapons
 function loadWeapons() {
-    console.log('[Waffen UI] Loading weapons...');
+    const resourceName = GetParentResourceName();
+    const fetchUrl = `https://${resourceName}/getWeapons`;
     
-    fetch(`https://${GetParentResourceName()}/getWeapons`, {
+    console.log('[Waffen UI] Loading weapons...');
+    console.log('[Waffen UI] Resource name:', resourceName);
+    console.log('[Waffen UI] Fetch URL:', fetchUrl);
+    
+    fetch(fetchUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -160,6 +176,7 @@ function loadWeapons() {
     })
     .catch(error => {
         console.error('[Waffen UI] Error loading weapons:', error);
+        console.error('[Waffen UI] Fetch URL was:', fetchUrl);
         showError('Waffen konnten nicht geladen werden. Überprüfe die Console (F8).');
     });
 }
@@ -252,9 +269,14 @@ function removeAllWeapons() {
 
 // Load Items
 function loadItems() {
-    console.log('[Waffen UI] Loading items...');
+    const resourceName = GetParentResourceName();
+    const fetchUrl = `https://${resourceName}/getItems`;
     
-    fetch(`https://${GetParentResourceName()}/getItems`, {
+    console.log('[Waffen UI] Loading items...');
+    console.log('[Waffen UI] Resource name:', resourceName);
+    console.log('[Waffen UI] Fetch URL:', fetchUrl);
+    
+    fetch(fetchUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -278,6 +300,7 @@ function loadItems() {
     })
     .catch(error => {
         console.error('[Waffen UI] Error loading items:', error);
+        console.error('[Waffen UI] Fetch URL was:', fetchUrl);
         showError('Items konnten nicht geladen werden. Überprüfe die Console (F8).');
     });
 }

@@ -21,17 +21,19 @@ end)
 -- Key Press Handler
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(100)
+        Citizen.Wait(0) -- Check every frame for immediate response
         
         if IsControlJustReleased(0, 56) then -- F9 key (56)
             if isAuthorized then
                 ToggleUI()
+                Citizen.Wait(200) -- Debounce: prevent double-toggle
             else
                 TriggerEvent('chat:addMessage', {
                     color = {255, 0, 0},
                     multiline = true,
                     args = {"System", "Du hast keine Berechtigung für dieses Menü!"}
                 })
+                Citizen.Wait(200) -- Debounce
             end
         end
     end
@@ -40,11 +42,24 @@ end)
 -- Toggle UI
 function ToggleUI()
     uiOpen = not uiOpen
-    SetNuiFocus(uiOpen, uiOpen)
-    SendNUIMessage({
-        action = "toggle",
-        show = uiOpen
-    })
+    
+    -- Set NUI focus with slight delay to ensure it registers
+    Citizen.CreateThread(function()
+        SetNuiFocus(uiOpen, uiOpen)
+        
+        -- Send toggle message to NUI
+        SendNUIMessage({
+            action = "toggle",
+            show = uiOpen
+        })
+        
+        -- Debug message
+        if uiOpen then
+            print("^2[Waffen] ^7UI geöffnet^0")
+        else
+            print("^2[Waffen] ^7UI geschlossen^0")
+        end
+    end)
 end
 
 -- Send weapons list to UI
