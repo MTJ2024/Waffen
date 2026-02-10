@@ -2,6 +2,7 @@ let weaponsData = {};
 let itemsData = [];
 let playersData = [];
 let selectedPlayer = null;
+let pendingWeaponForAmmo = null; // Für Munitions-Dialog
 
 // Listen for messages from the game
 window.addEventListener('message', function(event) {
@@ -265,7 +266,7 @@ function filterWeapons() {
     displayWeapons();
 }
 
-// Spawn Weapon for Self
+// Spawn Weapon for Self - NOW WITH AMMO PROMPT
 function spawnWeapon(weaponName) {
     const ammo = parseInt(document.getElementById('weapon-ammo').value) || 250;
     
@@ -278,7 +279,57 @@ function spawnWeapon(weaponName) {
             weapon: weaponName,
             ammo: ammo
         })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('[Waffen UI] Weapon spawned successfully');
+        
+        // Show ammo dialog after weapon is spawned
+        pendingWeaponForAmmo = weaponName;
+        showAmmoDialog(weaponName);
+    })
+    .catch(error => {
+        console.error('[Waffen UI] Error spawning weapon:', error);
     });
+}
+
+// Show Ammo Dialog
+function showAmmoDialog(weaponName) {
+    const dialog = document.getElementById('ammo-dialog');
+    const dialogText = document.getElementById('ammo-dialog-text');
+    
+    dialogText.textContent = `Möchtest du zusätzliche Munition für ${weaponName} spawnen?`;
+    dialog.classList.remove('hidden');
+}
+
+// Confirm Ammo Dialog
+function confirmAmmo(shouldSpawn) {
+    const dialog = document.getElementById('ammo-dialog');
+    dialog.classList.add('hidden');
+    
+    if (shouldSpawn && pendingWeaponForAmmo) {
+        const ammoAmount = document.getElementById('ammo-amount').value;
+        
+        fetch(`https://${GetParentResourceName()}/spawnWeaponAmmo`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                weapon: pendingWeaponForAmmo,
+                amount: parseInt(ammoAmount)
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('[Waffen UI] Ammo spawned successfully');
+        })
+        .catch(error => {
+            console.error('[Waffen UI] Error spawning ammo:', error);
+        });
+    }
+    
+    pendingWeaponForAmmo = null;
 }
 
 // Remove All Weapons

@@ -97,7 +97,33 @@
 
             <!-- Footer -->
             <div class="footer">
-                <p>Drücke <kbd>ESC</kbd> zum Schließen | Version 1.0.2</p>
+                <p>Drücke <kbd>ESC</kbd> zum Schließen | Version 1.0.6</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Munitions-Dialog -->
+    <div id="ammo-dialog" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎯 Munition hinzufügen?</h2>
+            </div>
+            <div class="modal-body">
+                <p id="ammo-dialog-text">Möchtest du Munition für diese Waffe spawnen?</p>
+                <div class="ammo-amount-selector">
+                    <label for="ammo-amount">Munitionsmenge:</label>
+                    <input type="number" id="ammo-amount" value="250" min="1" max="9999" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" onclick="confirmAmmo(true)">
+                    <span class="btn-icon">✓</span>
+                    Ja, Munition spawnen
+                </button>
+                <button class="btn btn-danger" onclick="confirmAmmo(false)">
+                    <span class="btn-icon">✗</span>
+                    Nein, danke
+                </button>
             </div>
         </div>
     </div>
