@@ -19,6 +19,30 @@ window.addEventListener('message', function(event) {
     }
 });
 
+// Enhanced mouse wheel support for smooth scrolling
+document.addEventListener('DOMContentLoaded', function() {
+    const weaponsList = document.getElementById('weapons-list');
+    const itemsList = document.getElementById('items-list');
+    const playersList = document.getElementById('players-list');
+    
+    // Add smooth mouse wheel scrolling to all grids
+    [weaponsList, itemsList, playersList].forEach(element => {
+        if (element) {
+            element.addEventListener('wheel', function(e) {
+                // Allow natural mouse wheel scrolling
+                e.stopPropagation();
+                
+                // Smooth scroll with mouse wheel
+                const delta = e.deltaY;
+                element.scrollBy({
+                    top: delta,
+                    behavior: 'smooth'
+                });
+            }, { passive: true });
+        }
+    });
+});
+
 // Close UI on ESC key
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
