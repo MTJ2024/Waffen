@@ -37,16 +37,34 @@ Ein professionelles Waffen- und Munitions-Verwaltungssystem für FiveM Server mi
 ## 📥 Installation
 
 1. Lade das Resource herunter
-2. Kopiere den `Waffen` Ordner in deinen FiveM Server `resources` Ordner
-3. **Wichtig**: Finde deine License ID (siehe unten)
-4. Öffne die `config.lua` und füge deine License ID hinzu:
+2. **WICHTIG**: Benenne den Ordner in `Waffen` um (genau so, Groß/Kleinschreibung beachten!)
+3. Kopiere den `Waffen` Ordner in deinen FiveM Server `resources` Ordner
+4. **Wichtig**: Finde deine License ID (siehe unten)
+5. Öffne die `config.lua` und füge deine License ID hinzu:
 ```lua
 Config.AuthorizedPlayers = {
     "license:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",  -- Deine License ID
 }
 ```
-5. Füge `ensure Waffen` zu deiner `server.cfg` hinzu
-6. Starte deinen Server
+6. Füge `ensure Waffen` zu deiner `server.cfg` hinzu
+7. Starte deinen Server
+
+### ⚠️ KRITISCH: Resource-Name muss "Waffen" sein!
+
+Dein Ordner MUSS genau **"Waffen"** heißen (mit großem W), sonst gibt es `TypeError: Failed to fetch` Fehler.
+
+**Richtig:** ✅
+```
+resources/Waffen/
+server.cfg: ensure Waffen
+```
+
+**Falsch:** ❌
+```
+resources/owner_waffen/     ← Umbenennen!
+resources/waffen/           ← Großes W fehlt!
+resources/Owner_Waffen/     ← Falscher Name!
+```
 
 ### 🔍 License ID finden
 

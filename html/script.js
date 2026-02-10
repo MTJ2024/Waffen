@@ -82,20 +82,47 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Get resource name - Standard FiveM NUI method
+// Get resource name - IMPROVED with multiple detection methods
 function GetParentResourceName() {
-    // Standard method: extract from nui://resource_name/ URL
-    const url = window.location.href;
+    // Method 1: Try FiveM's native function (most reliable in-game)
+    if (window.GetParentResourceName) {
+        const resourceName = window.GetParentResourceName();
+        console.log('[Waffen UI] ✅ Resource name from native function:', resourceName);
+        return resourceName;
+    }
     
-    // Match nui://resource_name/
-    const match = url.match(/nui:\/\/([^\/]+)\//);
+    // Method 2: Parse from URL
+    const url = window.location.href;
+    console.log('[Waffen UI] Current URL:', url);
+    
+    // Try different URL patterns
+    // Pattern 1: nui://resource_name/html/index.html
+    let match = url.match(/nui:\/\/([^\/]+)\//);
     if (match && match[1]) {
-        console.log('[Waffen UI] Resource name detected:', match[1]);
+        console.log('[Waffen UI] ✅ Resource name from URL:', match[1]);
         return match[1];
     }
     
-    // Fallback for local testing
-    console.warn('[Waffen UI] Could not detect resource name, using fallback');
+    // Pattern 2: Check if URL contains resource name differently
+    match = url.match(/nui:\/\/(.+?)(?:\/|$)/);
+    if (match && match[1]) {
+        console.log('[Waffen UI] ✅ Resource name (pattern 2):', match[1]);
+        return match[1];
+    }
+    
+    // Method 3: Try hostname
+    if (window.location.hostname && window.location.hostname !== '') {
+        console.log('[Waffen UI] ✅ Resource name from hostname:', window.location.hostname);
+        return window.location.hostname;
+    }
+    
+    // CRITICAL WARNING: Could not detect - using fallback
+    console.error('[Waffen UI] ⚠️⚠️⚠️ CRITICAL: Could not auto-detect resource name!');
+    console.error('[Waffen UI] ⚠️ Using fallback: "Waffen"');
+    console.error('[Waffen UI] ⚠️ If fetches fail, rename your resource folder to "Waffen"');
+    console.error('[Waffen UI] ⚠️ Or update this fallback to match your folder name');
+    
+    // Fallback: Use simple "Waffen" as resource name
     return 'Waffen';
 }
 
