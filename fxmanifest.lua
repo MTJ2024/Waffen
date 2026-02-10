@@ -3,7 +3,7 @@ game 'gta5'
 
 author 'Waffen Management System'
 description 'Professional Weapon & Ammunition Management System'
-version '3.0.0'
+version '1.1.4'
 
 shared_scripts {
     'config.lua'
@@ -18,7 +18,7 @@ server_scripts {
 }
 
 -- UI v3.0 - ULTRA PERFORMANCE - Optimized for RP Servers
-ui_page 'html/index_v3.html'
+ui_page 'html/index.html'
 
 files {
     -- v3.0 UI (Production - Ultra Fast)
