@@ -42,10 +42,27 @@ window.addEventListener('message', function(event) {
     if (data.action === 'toggle') {
         const container = document.getElementById('app-container');
         if (data.show) {
+            console.log('[Waffen v3.0] 🔓 OPENING UI');
             container.classList.remove('hidden');
+            
+            // Force display with inline styles (guarantee visibility)
+            container.style.display = 'flex';
+            container.style.opacity = '1';
+            container.style.visibility = 'visible';
+            container.style.pointerEvents = 'auto';
+            
+            console.log('[Waffen v3.0] ✅ Container should be visible now');
             loadInitialData();
         } else {
+            console.log('[Waffen v3.0] 🔒 CLOSING UI');
             container.classList.add('hidden');
+            
+            // Clear inline styles
+            container.style.display = '';
+            container.style.opacity = '';
+            container.style.visibility = '';
+            container.style.pointerEvents = '';
+            
             resetUI();
         }
     }
