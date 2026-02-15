@@ -44,25 +44,11 @@ window.addEventListener('message', function(event) {
         if (data.show) {
             console.log('[Waffen v3.0] 🔓 OPENING UI');
             container.classList.remove('hidden');
-            
-            // Force display with inline styles (guarantee visibility)
-            container.style.display = 'flex';
-            container.style.opacity = '1';
-            container.style.visibility = 'visible';
-            container.style.pointerEvents = 'auto';
-            
             console.log('[Waffen v3.0] ✅ Container should be visible now');
             loadInitialData();
         } else {
             console.log('[Waffen v3.0] 🔒 CLOSING UI');
             container.classList.add('hidden');
-            
-            // Clear inline styles
-            container.style.display = '';
-            container.style.opacity = '';
-            container.style.visibility = '';
-            container.style.pointerEvents = '';
-            
             resetUI();
         }
     }
@@ -104,7 +90,8 @@ async function loadInitialData() {
             })
         ]);
 
-        weaponsData = await weaponsRes.json();
+        const weaponsJson = await weaponsRes.json();
+        weaponsData = weaponsJson.weapons || weaponsJson;
         itemsData = await itemsRes.json();
 
         // Update counts in sidebar
@@ -194,10 +181,10 @@ function renderCategory(category) {
     attachCardListeners();
 }
 
+const ITEM_CATEGORIES = ['Munition', 'Waffen-Items', 'Zubehör', 'Medizin', 'Nahrung', 'Werkzeuge', 'Schutz', 'Sonstiges'];
+
 function createItemCard(item) {
-    const isWeapon = item.category !== 'Munition' && item.category !== 'Medizin' && 
-                     item.category !== 'Nahrung' && item.category !== 'Werkzeuge' &&
-                     item.category !== 'Schutz' && item.category !== 'Sonstiges';
+    const isWeapon = !ITEM_CATEGORIES.includes(item.category);
     
     return `
         <div class="item-card" data-item="${item.name}">
@@ -293,8 +280,7 @@ function spawnItem(itemName, category) {
     const card = document.querySelector(`[data-item="${itemName}"]`);
     if (!card) return;
     
-    const isWeapon = category !== 'Munition' && category !== 'Medizin' && 
-                     category !== 'Nahrung' && category !== 'Werkzeuge';
+    const isWeapon = !ITEM_CATEGORIES.includes(category);
     
     if (isWeapon) {
         const ammoInput = card.querySelector('.item-ammo');

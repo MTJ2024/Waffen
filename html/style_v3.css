@@ -64,9 +64,6 @@ body {
 
 .hidden {
     display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
 }
 
 /* ==========================================
@@ -84,14 +81,6 @@ body {
     display: flex;
     z-index: 99999;
     animation: fadeIn var(--transition-normal);
-}
-
-/* Explicit visible state when not hidden */
-#app-container:not(.hidden) {
-    display: flex !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
 }
 
 @keyframes fadeIn {
@@ -567,6 +556,7 @@ body {
 }
 
 .btn-spawn {
+    width: calc(100% - 2 * var(--spacing-md));
     margin: var(--spacing-md);
     padding: var(--spacing-md);
     background: var(--accent-primary);
