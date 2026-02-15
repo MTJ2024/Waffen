@@ -150,6 +150,12 @@ function setupNavigation() {
 // ==========================================
 
 function renderCategory(category) {
+    // Special handling for Spieler category
+    if (category === 'Spieler') {
+        loadPlayers();
+        return;
+    }
+    
     const contentBody = document.getElementById('content-body');
     const items = getCategoryItems(category);
     
@@ -426,6 +432,19 @@ function setupEventListeners() {
             applyFilter(filter);
         });
     });
+    
+    // Spawn target dropdown — load players when "player" is selected
+    const targetSelect = document.getElementById('spawn-target');
+    if (targetSelect) {
+        targetSelect.addEventListener('change', function() {
+            if (this.value === 'player') {
+                loadPlayers();
+            } else {
+                selectedPlayerId = null;
+                selectedPlayerName = null;
+            }
+        });
+    }
 }
 
 function attachCardListeners() {
@@ -439,7 +458,9 @@ function attachCardListeners() {
             this.classList.add('selected');
             
             const itemName = this.getAttribute('data-item');
+            selectedItem = itemName;
             document.getElementById('selected-item').textContent = itemName;
+            document.getElementById('spawn-btn').disabled = false;
         });
     });
 }
@@ -447,6 +468,186 @@ function attachCardListeners() {
 function applyFilter(filter) {
     // TODO: Implement MK2, Favorites filters
     renderCategory(currentCategory);
+}
+
+// ==========================================
+// PLAYER LIST & GIVE-TO-PLAYER
+// ==========================================
+
+function loadPlayers() {
+    fetch(`https://${getResourceName()}/getPlayers`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+    }).then(res => res.json()).then(data => {
+        playersData = data.players || [];
+        const countEl = document.getElementById('count-Spieler');
+        if (countEl) countEl.textContent = playersData.length;
+        
+        if (currentCategory === 'Spieler') {
+            renderPlayers();
+        }
+    }).catch(err => {
+        console.error('[Waffen v3.0] Player load error:', err);
+    });
+}
+
+function renderPlayers() {
+    const contentBody = document.getElementById('content-body');
+    
+    if (playersData.length === 0) {
+        contentBody.innerHTML = `
+            <div class="empty-state">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                    <line x1="12" y1="8" x2="12" y2="12" stroke-width="2"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2"/>
+                </svg>
+                <p>Keine Spieler in der Nähe</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = `
+        <div class="category-group">
+            <div class="category-header">
+                <h3>Spieler in der Nähe</h3>
+                <span class="category-count">${playersData.length} Spieler</span>
+            </div>
+            <div class="items-grid">
+    `;
+
+    playersData.forEach(player => {
+        html += `
+            <div class="item-card player-card" data-player-id="${player.id}">
+                <div class="item-header">
+                    <div>
+                        <div class="item-name">👤 ${player.name}</div>
+                        <div class="item-id">ID: ${player.id} | ${player.distance}m entfernt</div>
+                    </div>
+                    <div class="item-category-badge">Spieler</div>
+                </div>
+                <div class="item-controls">
+                    <button class="btn-spawn-card" onclick="selectPlayer(${player.id}, '${player.name}')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Auswählen
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+
+    html += `
+            </div>
+        </div>
+    `;
+
+    contentBody.innerHTML = html;
+}
+
+let selectedPlayerId = null;
+let selectedPlayerName = null;
+
+function selectPlayer(playerId, playerName) {
+    selectedPlayerId = playerId;
+    selectedPlayerName = playerName;
+    
+    // Update spawn target dropdown
+    const targetSelect = document.getElementById('spawn-target');
+    targetSelect.value = 'player';
+    
+    // Show selected player in info
+    document.getElementById('selected-item').textContent = 
+        selectedItem ? selectedItem + ' → ' + playerName : 'Spieler: ' + playerName;
+    
+    showNotification('Spieler ausgewählt: ' + playerName + ' (ID: ' + playerId + ')', 'info');
+}
+
+function spawnSelected() {
+    if (!selectedItem) {
+        showNotification('Bitte zuerst eine Waffe oder ein Item auswählen', 'error');
+        return;
+    }
+    
+    const ammo = parseInt(document.getElementById('spawn-ammo').value) || 250;
+    const amount = parseInt(document.getElementById('spawn-amount').value) || 1;
+    const target = document.getElementById('spawn-target').value;
+    
+    const isWeapon = !ITEM_CATEGORIES.includes(currentCategory);
+    
+    if (target === 'player') {
+        if (!selectedPlayerId) {
+            showNotification('Bitte zuerst einen Spieler auswählen (Spieler-Kategorie)', 'error');
+            return;
+        }
+        
+        if (isWeapon) {
+            fetch(`https://${getResourceName()}/giveWeapon`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    targetId: selectedPlayerId,
+                    weapon: selectedItem,
+                    ammo: ammo
+                })
+            }).then(() => {
+                showNotification('Waffe ' + selectedItem + ' an ' + selectedPlayerName + ' gegeben', 'success');
+            }).catch(() => {
+                showNotification('Fehler beim Geben der Waffe', 'error');
+            });
+        } else {
+            fetch(`https://${getResourceName()}/giveItem`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    targetId: selectedPlayerId,
+                    item: selectedItem,
+                    amount: amount
+                })
+            }).then(() => {
+                showNotification('Item ' + selectedItem + ' x' + amount + ' an ' + selectedPlayerName + ' gegeben', 'success');
+            }).catch(() => {
+                showNotification('Fehler beim Geben des Items', 'error');
+            });
+        }
+    } else {
+        // Spawn for self
+        if (isWeapon) {
+            fetch(`https://${getResourceName()}/spawnWeapon`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    weapon: selectedItem,
+                    amount: amount,
+                    ammo: ammo
+                })
+            }).then(res => res.json()).then(data => {
+                if (data && data.success) {
+                    showNotification('Waffe gespawnt: ' + selectedItem, 'success');
+                }
+            }).catch(() => {
+                showNotification('Fehler beim Spawnen', 'error');
+            });
+        } else {
+            fetch(`https://${getResourceName()}/spawnItem`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    item: selectedItem,
+                    amount: amount
+                })
+            }).then(res => res.json()).then(data => {
+                if (data && data.success) {
+                    showNotification('Item gespawnt: ' + selectedItem + ' x' + amount, 'success');
+                }
+            }).catch(() => {
+                showNotification('Fehler beim Spawnen', 'error');
+            });
+        }
+    }
 }
 
 // ==========================================
@@ -487,8 +688,12 @@ function getResourceName() {
 function resetUI() {
     searchTerm = '';
     selectedItem = null;
+    selectedPlayerId = null;
+    selectedPlayerName = null;
     document.getElementById('global-search').value = '';
     document.getElementById('selected-item').textContent = 'Keine Auswahl';
+    document.getElementById('spawn-btn').disabled = true;
+    document.getElementById('spawn-target').value = 'self';
 }
 
 // ==========================================

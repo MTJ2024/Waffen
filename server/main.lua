@@ -1,27 +1,145 @@
 -- ════════════════════════════════════════════════════════════════
 -- FRAMEWORK DETECTION & INTEGRATION
+-- Automatische Erkennung aller gängigen Inventory-Systeme
 -- ════════════════════════════════════════════════════════════════
 
 ESX = nil
 QBCore = nil
-OXInventory = false
+InventoryExport = nil
 Framework = "standalone"
+InventorySystem = "none"
 
--- Try to detect ox_inventory first (can work with ESX/QB-Core)
-local oxSuccess, oxExports = pcall(function()
-    return exports.ox_inventory
-end)
-if oxSuccess and oxExports then
-    OXInventory = true
-    print("^2[Waffen] ^7ox_inventory detected!^0")
+-- Helper: safely check if a resource is started
+local function IsResourceStarted(resourceName)
+    return GetResourceState(resourceName) == 'started'
 end
+
+-- Helper: safely try to get an export
+local function TryExport(resourceName, exportName)
+    local success, result = pcall(function()
+        return exports[resourceName]
+    end)
+    if success and result then
+        return result
+    end
+    return nil
+end
+
+-- ═══ INVENTORY AUTO-DETECTION ═══
+-- Checks for all popular inventory systems in priority order
+
+local inventoryDetected = false
+
+-- 1. ox_inventory (most popular, works with ESX/QB-Core/standalone)
+if not inventoryDetected and IsResourceStarted('ox_inventory') then
+    local exp = TryExport('ox_inventory')
+    if exp then
+        InventoryExport = exp
+        InventorySystem = "ox_inventory"
+        inventoryDetected = true
+        print("^2[Waffen] ^7✅ Inventory detected: ox_inventory^0")
+    end
+end
+
+-- 2. qs-inventory (Quasar Store)
+if not inventoryDetected and IsResourceStarted('qs-inventory') then
+    local exp = TryExport('qs-inventory')
+    if exp then
+        InventoryExport = exp
+        InventorySystem = "qs-inventory"
+        inventoryDetected = true
+        print("^2[Waffen] ^7✅ Inventory detected: qs-inventory^0")
+    end
+end
+
+-- 3. codem-inventory
+if not inventoryDetected and IsResourceStarted('codem-inventory') then
+    local exp = TryExport('codem-inventory')
+    if exp then
+        InventoryExport = exp
+        InventorySystem = "codem-inventory"
+        inventoryDetected = true
+        print("^2[Waffen] ^7✅ Inventory detected: codem-inventory^0")
+    end
+end
+
+-- 4. origen_inventory
+if not inventoryDetected and IsResourceStarted('origen_inventory') then
+    local exp = TryExport('origen_inventory')
+    if exp then
+        InventoryExport = exp
+        InventorySystem = "origen_inventory"
+        inventoryDetected = true
+        print("^2[Waffen] ^7✅ Inventory detected: origen_inventory^0")
+    end
+end
+
+-- 5. mf-inventory
+if not inventoryDetected and IsResourceStarted('mf-inventory') then
+    local exp = TryExport('mf-inventory')
+    if exp then
+        InventoryExport = exp
+        InventorySystem = "mf-inventory"
+        inventoryDetected = true
+        print("^2[Waffen] ^7✅ Inventory detected: mf-inventory^0")
+    end
+end
+
+-- 6. tgiann-inventory
+if not inventoryDetected and IsResourceStarted('tgiann-inventory') then
+    local exp = TryExport('tgiann-inventory')
+    if exp then
+        InventoryExport = exp
+        InventorySystem = "tgiann-inventory"
+        inventoryDetected = true
+        print("^2[Waffen] ^7✅ Inventory detected: tgiann-inventory^0")
+    end
+end
+
+-- 7. core_inventory
+if not inventoryDetected and IsResourceStarted('core_inventory') then
+    local exp = TryExport('core_inventory')
+    if exp then
+        InventoryExport = exp
+        InventorySystem = "core_inventory"
+        inventoryDetected = true
+        print("^2[Waffen] ^7✅ Inventory detected: core_inventory^0")
+    end
+end
+
+-- 8. qb-inventory (standalone QB inventory)
+if not inventoryDetected and IsResourceStarted('qb-inventory') then
+    local exp = TryExport('qb-inventory')
+    if exp then
+        InventoryExport = exp
+        InventorySystem = "qb-inventory"
+        inventoryDetected = true
+        print("^2[Waffen] ^7✅ Inventory detected: qb-inventory^0")
+    end
+end
+
+-- 9. lj-inventory (older QB inventory)
+if not inventoryDetected and IsResourceStarted('lj-inventory') then
+    local exp = TryExport('lj-inventory')
+    if exp then
+        InventoryExport = exp
+        InventorySystem = "lj-inventory"
+        inventoryDetected = true
+        print("^2[Waffen] ^7✅ Inventory detected: lj-inventory^0")
+    end
+end
+
+if not inventoryDetected then
+    print("^3[Waffen] ^7⚠️ Kein Inventory-System erkannt - nutze Framework-Standard^0")
+end
+
+-- ═══ FRAMEWORK DETECTION (ESX / QB-Core) ═══
 
 -- Try to detect ESX
 pcall(function()
     TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 end)
 if ESX == nil then
-    -- Try new ESX export
     pcall(function()
         ESX = exports['es_extended']:getSharedObject()
     end)
@@ -35,9 +153,9 @@ if not ESX then
 end
 
 -- Determine framework
-if OXInventory then
-    Framework = "ox_inventory"
-    print("^2[Waffen] ^7Framework detected: ox_inventory^0")
+if InventorySystem ~= "none" then
+    Framework = InventorySystem
+    print("^2[Waffen] ^7Framework: " .. Framework .. "^0")
 elseif ESX then
     Framework = "ESX"
     print("^2[Waffen] ^7Framework detected: ESX^0")
@@ -89,14 +207,16 @@ end
 
 -- Add item to player inventory
 function AddItem(source, itemName, amount)
-    if Framework == "ox_inventory" then
-        -- ox_inventory integration
-        local success = exports.ox_inventory:AddItem(source, itemName, amount)
+    if InventorySystem ~= "none" and InventoryExport then
+        -- All detected inventory systems support AddItem export
+        local success = pcall(function()
+            return InventoryExport:AddItem(source, itemName, amount)
+        end)
         if success then
-            print("^2[Waffen] ^7ox_inventory: Added " .. itemName .. " x" .. amount .. " to player " .. source .. "^0")
+            print("^2[Waffen] ^7" .. InventorySystem .. ": Added " .. itemName .. " x" .. amount .. " to player " .. source .. "^0")
             return true
         else
-            print("^1[Waffen] ^7ox_inventory: Failed to add " .. itemName .. " - item might not exist in ox_inventory^0")
+            print("^1[Waffen] ^7" .. InventorySystem .. ": Failed to add " .. itemName .. " - item might not exist^0")
             return false
         end
     elseif Framework == "ESX" then
@@ -124,21 +244,23 @@ end
 
 -- Add weapon to player
 function AddWeapon(source, weaponName, ammo)
-    if Framework == "ox_inventory" then
-        -- ox_inventory uses weapon items with metadata
-        -- Note: Do NOT set 'durability' here — ox_inventory manages durability
-        -- internally via its time-based degrade system. Setting a static value
+    if InventorySystem ~= "none" and InventoryExport then
+        -- Inventory systems that support weapon items with metadata
+        -- Note: Do NOT set 'durability' here — inventory systems manage durability
+        -- internally via their own degrade system. Setting a static value
         -- causes "Haltbarkeit abgelaufen" (durability expired) errors.
         local metadata = {
             ammo = ammo,
             serial = "WF-" .. math.random(100000, 999999)
         }
-        local success = exports.ox_inventory:AddItem(source, weaponName, 1, metadata)
+        local success = pcall(function()
+            return InventoryExport:AddItem(source, weaponName, 1, metadata)
+        end)
         if success then
-            print("^2[Waffen] ^7ox_inventory: Added weapon " .. weaponName .. " with " .. ammo .. " ammo to player " .. source .. "^0")
+            print("^2[Waffen] ^7" .. InventorySystem .. ": Added weapon " .. weaponName .. " with " .. ammo .. " ammo to player " .. source .. "^0")
             return true
         else
-            print("^1[Waffen] ^7ox_inventory: Failed to add weapon " .. weaponName .. " - weapon might not exist in ox_inventory^0")
+            print("^1[Waffen] ^7" .. InventorySystem .. ": Failed to add weapon " .. weaponName .. " - weapon might not exist^0")
             return false
         end
     elseif Framework == "ESX" then
@@ -151,7 +273,6 @@ function AddWeapon(source, weaponName, ammo)
     elseif Framework == "QBCore" then
         local Player = QBCore.Functions.GetPlayer(source)
         if Player then
-            -- QB-Core uses weapon items
             Player.Functions.AddItem(weaponName, 1, false, {ammo = ammo})
             print("^2[Waffen] ^7QB-Core: Added weapon item " .. weaponName .. " with " .. ammo .. " ammo to player " .. source .. "^0")
             return true
