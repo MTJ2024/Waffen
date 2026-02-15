@@ -428,15 +428,13 @@ function confirmAmmo(shouldSpawn) {
 
 // Remove All Weapons
 function removeAllWeapons() {
-    if (confirm('Möchtest du wirklich alle Waffen entfernen?')) {
-        fetch(`https://${getResourceName()}/removeAllWeapons`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({})
-        });
-    }
+    fetch(`https://${getResourceName()}/removeAllWeapons`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({})
+    });
 }
 
 // Load Items
@@ -748,7 +746,7 @@ function giveWeaponToPlayer(playerId) {
     const weaponName = weaponSelect.value;
     
     if (!weaponName) {
-        alert('Bitte wähle eine Waffe aus!');
+        console.warn('[Waffen] Bitte wähle eine Waffe aus!');
         return;
     }
     
@@ -775,7 +773,7 @@ function giveItemToPlayer(playerId) {
     const itemName = itemSelect.value;
     
     if (!itemName) {
-        alert('Bitte wähle ein Item aus!');
+        console.warn('[Waffen] Bitte wähle ein Item aus!');
         return;
     }
     

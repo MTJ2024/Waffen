@@ -370,7 +370,7 @@ function showNotification(message, type) {
 }
 
 function removeAllWeapons() {
-    if (confirm('Alle Waffen entfernen?')) {
+    showConfirm('Alle Waffen entfernen?', 'Diese Aktion kann nicht rückgängig gemacht werden.', () => {
         fetch(`https://${getResourceName()}/removeAllWeapons`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -378,7 +378,35 @@ function removeAllWeapons() {
         }).then(() => {
             showNotification('Alle Waffen entfernt', 'success');
         });
+    });
+}
+
+function showConfirm(title, message, onConfirm) {
+    const modal = document.getElementById('confirm-modal');
+    document.getElementById('confirm-title').textContent = title;
+    document.getElementById('confirm-message').textContent = message;
+    modal.classList.remove('hidden');
+    
+    const okBtn = document.getElementById('confirm-ok');
+    const cancelBtn = document.getElementById('confirm-cancel');
+    
+    function cleanup() {
+        modal.classList.add('hidden');
+        okBtn.removeEventListener('click', handleOk);
+        cancelBtn.removeEventListener('click', handleCancel);
     }
+    
+    function handleOk() {
+        cleanup();
+        onConfirm();
+    }
+    
+    function handleCancel() {
+        cleanup();
+    }
+    
+    okBtn.addEventListener('click', handleOk);
+    cancelBtn.addEventListener('click', handleCancel);
 }
 
 // ==========================================
