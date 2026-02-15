@@ -306,11 +306,8 @@ function spawnItem(itemName, category) {
                 ammo: ammo
             })
         }).then(res => res.json()).then(data => {
-            showFeedback(card, 'success');
             if (data && data.success) {
-                showNotification('Waffe gespawnt: ' + (data.weapon || itemName), 'success');
-            } else {
-                showNotification('Fehler beim Spawnen: ' + (data.error || itemName), 'error');
+                showFeedback(card, 'success');
             }
         }).catch(err => {
             showNotification('Fehler beim Spawnen: ' + itemName, 'error');
@@ -327,11 +324,8 @@ function spawnItem(itemName, category) {
                 amount: amount
             })
         }).then(res => res.json()).then(data => {
-            showFeedback(card, 'success');
             if (data && data.success) {
-                showNotification('Item gespawnt: ' + (data.item || itemName) + ' x' + (data.amount || amount), 'success');
-            } else {
-                showNotification('Fehler beim Spawnen: ' + (data.error || itemName), 'error');
+                showFeedback(card, 'success');
             }
         }).catch(err => {
             showNotification('Fehler beim Spawnen: ' + itemName, 'error');
@@ -390,23 +384,22 @@ function showConfirm(title, message, onConfirm) {
     const okBtn = document.getElementById('confirm-ok');
     const cancelBtn = document.getElementById('confirm-cancel');
     
+    // Replace buttons to remove any old listeners
+    const newOkBtn = okBtn.cloneNode(true);
+    const newCancelBtn = cancelBtn.cloneNode(true);
+    okBtn.parentNode.replaceChild(newOkBtn, okBtn);
+    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+    
     function cleanup() {
         modal.classList.add('hidden');
-        okBtn.removeEventListener('click', handleOk);
-        cancelBtn.removeEventListener('click', handleCancel);
     }
     
-    function handleOk() {
+    newOkBtn.addEventListener('click', () => {
         cleanup();
         onConfirm();
-    }
+    });
     
-    function handleCancel() {
-        cleanup();
-    }
-    
-    okBtn.addEventListener('click', handleOk);
-    cancelBtn.addEventListener('click', handleCancel);
+    newCancelBtn.addEventListener('click', cleanup);
 }
 
 // ==========================================
