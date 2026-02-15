@@ -53,9 +53,9 @@ window.addEventListener('message', function(event) {
         } else {
             console.log('[Waffen v3.0] 🔒 CLOSING UI');
             container.classList.add('hidden');
-            container.style.display = '';
-            container.style.opacity = '';
-            container.style.visibility = '';
+            container.style.removeProperty('display');
+            container.style.removeProperty('opacity');
+            container.style.removeProperty('visibility');
             resetUI();
         }
     }
