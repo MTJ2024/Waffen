@@ -44,11 +44,18 @@ window.addEventListener('message', function(event) {
         if (data.show) {
             console.log('[Waffen v3.0] 🔓 OPENING UI');
             container.classList.remove('hidden');
-            console.log('[Waffen v3.0] ✅ Container should be visible now');
+            // Force visibility in case CSS class removal is not enough in CEF
+            container.style.display = 'flex';
+            container.style.opacity = '1';
+            container.style.visibility = 'visible';
+            console.log('[Waffen v3.0] ✅ Container visible');
             loadInitialData();
         } else {
             console.log('[Waffen v3.0] 🔒 CLOSING UI');
             container.classList.add('hidden');
+            container.style.display = '';
+            container.style.opacity = '';
+            container.style.visibility = '';
             resetUI();
         }
     }
@@ -56,7 +63,7 @@ window.addEventListener('message', function(event) {
 
 // Close UI
 function closeUI() {
-    fetch(`https://${GetParentResourceName()}/closeUI`, {
+    fetch(`https://${getResourceName()}/closeUI`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({})
@@ -78,12 +85,12 @@ async function loadInitialData() {
     try {
         // Load all data in parallel for speed
         const [weaponsRes, itemsRes] = await Promise.all([
-            fetch(`https://${GetParentResourceName()}/getWeapons`, {
+            fetch(`https://${getResourceName()}/getWeapons`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({})
             }),
-            fetch(`https://${GetParentResourceName()}/getItems`, {
+            fetch(`https://${getResourceName()}/getItems`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({})
@@ -286,7 +293,7 @@ function spawnItem(itemName, category) {
         const ammoInput = card.querySelector('.item-ammo');
         const ammo = parseInt(ammoInput?.value || 250);
         
-        fetch(`https://${GetParentResourceName()}/spawnWeapon`, {
+        fetch(`https://${getResourceName()}/spawnWeapon`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -301,7 +308,7 @@ function spawnItem(itemName, category) {
         const amountInput = card.querySelector('.item-amount');
         const amount = parseInt(amountInput?.value || 1);
         
-        fetch(`https://${GetParentResourceName()}/spawnItem`, {
+        fetch(`https://${getResourceName()}/spawnItem`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -323,7 +330,7 @@ function showFeedback(element, type) {
 
 function removeAllWeapons() {
     if (confirm('Alle Waffen entfernen?')) {
-        fetch(`https://${GetParentResourceName()}/removeAllWeapons`, {
+        fetch(`https://${getResourceName()}/removeAllWeapons`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({})
@@ -382,29 +389,35 @@ function applyFilter(filter) {
 // UTILITY FUNCTIONS
 // ==========================================
 
-function GetParentResourceName() {
-    // Try FiveM native first
-    if (window.GetParentResourceName && typeof window.GetParentResourceName === 'function') {
+// Cache the resource name to avoid repeated lookups
+const _resourceName = (function() {
+    // FiveM provides GetParentResourceName as a global native
+    // We must capture it BEFORE defining any same-named function
+    if (typeof GetParentResourceName === 'function') {
         try {
-            const resourceName = window.GetParentResourceName();
-            if (resourceName && resourceName !== 'getResourceName') {
-                return resourceName;
+            const name = GetParentResourceName();
+            if (name && name !== 'getResourceName') {
+                return name;
             }
         } catch (e) {
             console.warn('[Waffen v3.0] Could not call FiveM native:', e);
         }
     }
-    
-    // Fallback: Parse from URL
+
+    // Fallback: Parse from NUI URL
     const url = window.location.href;
     const match = url.match(/nui:\/\/([^\/]+)\//);
     if (match && match[1]) {
         return match[1];
     }
-    
+
     // Last resort fallback
     console.warn('[Waffen v3.0] Using fallback resource name');
     return 'Waffen';
+})();
+
+function getResourceName() {
+    return _resourceName;
 }
 
 function resetUI() {

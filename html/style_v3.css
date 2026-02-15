@@ -64,6 +64,8 @@ body {
 
 .hidden {
     display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
 
 /* ==========================================
@@ -80,7 +82,9 @@ body {
     backdrop-filter: blur(12px);
     display: flex;
     z-index: 99999;
-    animation: fadeIn var(--transition-normal);
+    opacity: 1;
+    visibility: visible;
+    animation: fadeIn var(--transition-normal) forwards;
 }
 
 @keyframes fadeIn {
