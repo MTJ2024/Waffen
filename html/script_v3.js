@@ -355,7 +355,7 @@ function giveItemDirect(itemName, category, btnElement) {
     const playerIdInput = card.querySelector('.give-player-id');
     const targetId = playerIdInput ? parseInt(playerIdInput.value) : NaN;
     
-    if (!targetId || targetId < 1) {
+    if (isNaN(targetId) || targetId < 1) {
         showNotification('Bitte eine gültige Spieler-ID eingeben', 'error');
         if (playerIdInput) playerIdInput.focus();
         return;
