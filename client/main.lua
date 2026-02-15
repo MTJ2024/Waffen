@@ -26,18 +26,28 @@ Citizen.CreateThread(function()
             local hasWeapon, currentWeapon = GetCurrentPedWeapon(playerPed)
             
             if hasWeapon and currentWeapon ~= GetHashKey("WEAPON_UNARMED") then
-                -- Refill reserve ammo
-                local _, maxAmmo = GetMaxAmmo(playerPed, currentWeapon)
-                SetPedAmmo(playerPed, currentWeapon, maxAmmo > 0 and maxAmmo or Config.DefaultAmmo)
-                
-                -- Fill the current clip so no reload animation plays
-                local maxClip = GetMaxAmmoInClip(playerPed, currentWeapon, true)
-                if maxClip > 0 then
-                    SetAmmoInClip(playerPed, currentWeapon, maxClip)
+                -- Skip refill while player is actively shooting to prevent
+                -- audio engine interruption (SetAmmoInClip during fire breaks sound)
+                if not IsPedShooting(playerPed) then
+                    local currentAmmo = GetAmmoInPedWeapon(playerPed, currentWeapon)
+                    local _, maxAmmo = GetMaxAmmo(playerPed, currentWeapon)
+                    local targetAmmo = maxAmmo > 0 and maxAmmo or Config.DefaultAmmo
+                    
+                    -- Only refill reserve ammo when it drops below half
+                    if currentAmmo < targetAmmo / 2 then
+                        SetPedAmmo(playerPed, currentWeapon, targetAmmo)
+                    end
+                    
+                    -- Only refill clip when it's actually empty (triggers reload)
+                    local _, currentClip = GetAmmoInClip(playerPed, currentWeapon)
+                    local maxClip = GetMaxAmmoInClip(playerPed, currentWeapon, true)
+                    if maxClip > 0 and currentClip <= 0 then
+                        SetAmmoInClip(playerPed, currentWeapon, maxClip)
+                    end
                 end
             end
             
-            Citizen.Wait(100) -- Check frequently for smooth infinite ammo
+            Citizen.Wait(200) -- Check at a safe interval
         else
             Citizen.Wait(2000) -- Check less frequently when not active
         end
