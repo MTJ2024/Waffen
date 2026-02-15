@@ -90,26 +90,26 @@ function ToggleUI()
     
     print("^3[Waffen DEBUG] ^7ToggleUI called, uiOpen =", uiOpen)
     
-    -- Set NUI focus
-    SetNuiFocus(uiOpen, uiOpen)
-    print("^3[Waffen DEBUG] ^7SetNuiFocus called with:", uiOpen)
-    
-    -- Send toggle message to NUI
-    local message = {
-        action = "toggle",
-        show = uiOpen
-    }
-    print("^3[Waffen DEBUG] ^7Sending NUI message:", json.encode(message))
-    SendNUIMessage(message)
-    
-    -- Wait a tiny bit to ensure message is sent
-    Citizen.Wait(50)
-    
-    -- Debug message
     if uiOpen then
+        -- Opening: set focus first, then send NUI message
+        SetNuiFocus(true, true)
+        print("^3[Waffen DEBUG] ^7SetNuiFocus called with: true")
+        
+        SendNUIMessage({ action = "toggle", show = true })
+        
+        Citizen.Wait(50)
         print("^2[Waffen] ^7UI geöffnet^0")
         print("^3[Waffen DEBUG] ^7NUI should now be VISIBLE. Check F8 console!^0")
     else
+        -- Closing: send NUI message first, wait for game state to settle,
+        -- then release focus. This prevents ox_inventory's keybind handler
+        -- from firing a raycast before the camera/ped state is ready.
+        SendNUIMessage({ action = "toggle", show = false })
+        
+        Citizen.Wait(200) -- Let game state settle before releasing controls
+        
+        SetNuiFocus(false, false)
+        print("^3[Waffen DEBUG] ^7SetNuiFocus called with: false")
         print("^2[Waffen] ^7UI geschlossen^0")
     end
 end
