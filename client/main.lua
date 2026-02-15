@@ -103,7 +103,8 @@ function ToggleUI()
     else
         -- Closing: send NUI message first, wait for game state to settle,
         -- then release focus. This prevents ox_inventory's keybind handler
-        -- from firing a raycast before the camera/ped state is ready.
+        -- from firing a StartShapeTestLosProbe raycast (native 0x8acd366038d14505)
+        -- before the camera/ped state is ready after NUI close.
         SendNUIMessage({ action = "toggle", show = false })
         
         Citizen.Wait(200) -- Let game state settle before releasing controls
