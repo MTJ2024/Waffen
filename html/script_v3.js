@@ -218,7 +218,7 @@ function createItemCard(item) {
                 ` : `
                     <input type="number" class="item-amount" value="1" min="1" max="999" placeholder="Anzahl">
                 `}
-                <button class="btn-spawn-card" onclick="spawnItem('${item.name}', '${item.category}')">
+                <button class="btn-spawn-card">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                         <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2"/>
                     </svg>
@@ -227,7 +227,7 @@ function createItemCard(item) {
             </div>
             <div class="item-give-row">
                 <input type="number" class="give-player-id" min="1" max="9999" placeholder="Spieler-ID">
-                <button class="btn-give-card" onclick="giveItemDirect('${item.name}', '${item.category}', this)">
+                <button class="btn-give-card">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                         <path d="M5 12H19M14 7L19 12L14 17" stroke="currentColor" stroke-width="2"/>
                     </svg>
@@ -498,19 +498,46 @@ function setupEventListeners() {
 }
 
 function attachCardListeners() {
-    // Select on click
     document.querySelectorAll('.item-card').forEach(card => {
+        const itemName = card.getAttribute('data-item');
+        const category = card.getAttribute('data-category');
+        
+        // Clicking the card body selects it (but NOT when clicking buttons/inputs)
         card.addEventListener('click', function(e) {
-            // Don't trigger if clicking button or input
-            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+            // Skip if clicking on interactive elements
+            if (e.target.closest('button') || e.target.closest('input')) return;
             
             document.querySelectorAll('.item-card').forEach(c => c.classList.remove('selected'));
             this.classList.add('selected');
             
-            const itemName = this.getAttribute('data-item');
             selectedItem = itemName;
             document.getElementById('selected-item').textContent = itemName;
             document.getElementById('spawn-btn').disabled = false;
+        });
+        
+        // Spawnen button — spawns for yourself
+        const spawnBtn = card.querySelector('.btn-spawn-card');
+        if (spawnBtn) {
+            spawnBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                spawnItem(itemName, category);
+            });
+        }
+        
+        // Geben button — gives to player by entered ID
+        const giveBtn = card.querySelector('.btn-give-card');
+        if (giveBtn) {
+            giveBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                giveItemDirect(itemName, category, this);
+            });
+        }
+        
+        // Stop propagation on inputs to prevent card selection when typing
+        card.querySelectorAll('input').forEach(input => {
+            input.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
         });
     });
 }
