@@ -575,7 +575,8 @@ function selectPlayer(playerId, playerName) {
     // Switch spawn target to player mode and show ID field
     const targetSelect = document.getElementById('spawn-target');
     targetSelect.value = 'player';
-    document.getElementById('player-id-group').style.display = '';
+    const playerIdGroup = document.getElementById('player-id-group');
+    if (playerIdGroup) playerIdGroup.style.display = '';
     
     // Show selected player in info
     document.getElementById('selected-item').textContent = 
@@ -597,7 +598,8 @@ function spawnSelected() {
     const isWeapon = !ITEM_CATEGORIES.includes(currentCategory);
     
     if (target === 'player') {
-        const targetId = parseInt(document.getElementById('spawn-player-id').value);
+        const playerIdEl = document.getElementById('spawn-player-id');
+        const targetId = playerIdEl ? parseInt(playerIdEl.value) : NaN;
         if (!targetId || targetId < 1) {
             showNotification('Bitte eine gültige Spieler-ID eingeben', 'error');
             return;
