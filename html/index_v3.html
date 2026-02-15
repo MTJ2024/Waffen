@@ -182,29 +182,6 @@
             </div>
         </main>
 
-        <!-- Spawn Control Panel (Bottom Right) -->
-        <div class="spawn-panel">
-            <div class="spawn-header">Spawn-Einstellungen</div>
-            <div class="spawn-controls">
-                <div class="control-group">
-                    <label>Munition</label>
-                    <input type="number" id="spawn-ammo" value="250" min="0" max="9999">
-                </div>
-                <div class="control-group">
-                    <label>Anzahl</label>
-                    <input type="number" id="spawn-amount" value="1" min="1" max="99">
-                </div>
-            </div>
-            <div class="spawn-info">
-                <span id="selected-item">Keine Auswahl</span>
-            </div>
-            <button class="btn-spawn" id="spawn-btn" onclick="spawnSelected()" disabled>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2"/>
-                </svg>
-                Spawnen
-            </button>
-        </div>
     </div>
 
     <script src="script_v3.js"></script>

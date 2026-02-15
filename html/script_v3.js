@@ -9,7 +9,6 @@ let weaponsData = {};
 let itemsData = {};
 let playersData = [];
 let currentCategory = 'Pistolen';
-let selectedItem = null;
 let searchTerm = '';
 
 // Performance: Debounce für Search
@@ -502,19 +501,6 @@ function attachCardListeners() {
         const itemName = card.getAttribute('data-item');
         const category = card.getAttribute('data-category');
         
-        // Clicking the card body selects it (but NOT when clicking buttons/inputs)
-        card.addEventListener('click', function(e) {
-            // Skip if clicking on interactive elements
-            if (e.target.closest('button') || e.target.closest('input')) return;
-            
-            document.querySelectorAll('.item-card').forEach(c => c.classList.remove('selected'));
-            this.classList.add('selected');
-            
-            selectedItem = itemName;
-            document.getElementById('selected-item').textContent = itemName;
-            document.getElementById('spawn-btn').disabled = false;
-        });
-        
         // Spawnen button — spawns for yourself
         const spawnBtn = card.querySelector('.btn-spawn-card');
         if (spawnBtn) {
@@ -533,7 +519,7 @@ function attachCardListeners() {
             });
         }
         
-        // Stop propagation on inputs to prevent card selection when typing
+        // Stop propagation on inputs to prevent unintended events
         card.querySelectorAll('input').forEach(input => {
             input.addEventListener('click', function(e) {
                 e.stopPropagation();
@@ -648,51 +634,6 @@ function selectPlayer(playerId, playerName) {
     showNotification('Spieler ' + playerName + ' hat ID: ' + playerId + ' — gib diese ID bei "Geben" ein', 'info');
 }
 
-function spawnSelected() {
-    if (!selectedItem) {
-        showNotification('Bitte zuerst eine Waffe oder ein Item auswählen', 'error');
-        return;
-    }
-    
-    const ammo = parseInt(document.getElementById('spawn-ammo').value) || 250;
-    const amount = parseInt(document.getElementById('spawn-amount').value) || 1;
-    
-    const isWeapon = !ITEM_CATEGORIES.includes(currentCategory);
-    
-    if (isWeapon) {
-        fetch(`https://${getResourceName()}/spawnWeapon`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                weapon: selectedItem,
-                amount: amount,
-                ammo: ammo
-            })
-        }).then(res => res.json()).then(data => {
-            if (data && data.success) {
-                showNotification('Waffe gespawnt: ' + selectedItem, 'success');
-            }
-        }).catch(() => {
-            showNotification('Fehler beim Spawnen', 'error');
-        });
-    } else {
-        fetch(`https://${getResourceName()}/spawnItem`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                item: selectedItem,
-                amount: amount
-            })
-        }).then(res => res.json()).then(data => {
-            if (data && data.success) {
-                showNotification('Item gespawnt: ' + selectedItem + ' x' + amount, 'success');
-            }
-        }).catch(() => {
-            showNotification('Fehler beim Spawnen', 'error');
-        });
-    }
-}
-
 // ==========================================
 // UTILITY FUNCTIONS
 // ==========================================
@@ -730,10 +671,7 @@ function getResourceName() {
 
 function resetUI() {
     searchTerm = '';
-    selectedItem = null;
     document.getElementById('global-search').value = '';
-    document.getElementById('selected-item').textContent = 'Keine Auswahl';
-    document.getElementById('spawn-btn').disabled = true;
 }
 
 // ==========================================
