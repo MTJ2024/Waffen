@@ -487,6 +487,58 @@ body {
     transform: scale(1.02);
 }
 
+/* Give-to-Player Row on Cards */
+.item-give-row {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--border-color);
+}
+
+.item-give-row .give-player-id {
+    flex: 1;
+    padding: var(--spacing-sm);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    text-align: center;
+}
+
+.item-give-row .give-player-id:focus {
+    outline: none;
+    border-color: var(--accent-secondary);
+}
+
+.item-give-row .give-player-id::placeholder {
+    color: var(--text-muted);
+    font-size: var(--font-size-xs);
+}
+
+.btn-give-card {
+    flex: 2;
+    padding: var(--spacing-sm);
+    background: var(--accent-secondary);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: #000000;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.btn-give-card:hover {
+    background: #0099cc;
+    transform: scale(1.02);
+}
+
 /* ==========================================
    SPAWN PANEL (Bottom Right)
    ========================================== */

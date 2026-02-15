@@ -204,7 +204,7 @@ function createItemCard(item) {
     const isWeapon = !ITEM_CATEGORIES.includes(item.category);
     
     return `
-        <div class="item-card" data-item="${item.name}">
+        <div class="item-card" data-item="${item.name}" data-category="${item.category}">
             <div class="item-header">
                 <div>
                     <div class="item-name">${item.label || item.name}</div>
@@ -223,6 +223,15 @@ function createItemCard(item) {
                         <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2"/>
                     </svg>
                     Spawnen
+                </button>
+            </div>
+            <div class="item-give-row">
+                <input type="number" class="give-player-id" min="1" max="9999" placeholder="Spieler-ID">
+                <button class="btn-give-card" onclick="giveItemDirect('${item.name}', '${item.category}', this)">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12H19M14 7L19 12L14 17" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Geben
                 </button>
             </div>
         </div>
@@ -339,6 +348,60 @@ function spawnItem(itemName, category) {
     }
 }
 
+function giveItemDirect(itemName, category, btnElement) {
+    const card = btnElement.closest('.item-card');
+    if (!card) return;
+    
+    const playerIdInput = card.querySelector('.give-player-id');
+    const targetId = playerIdInput ? parseInt(playerIdInput.value) : NaN;
+    
+    if (!targetId || targetId < 1) {
+        showNotification('Bitte eine gültige Spieler-ID eingeben', 'error');
+        if (playerIdInput) playerIdInput.focus();
+        return;
+    }
+    
+    const isWeapon = !ITEM_CATEGORIES.includes(category);
+    
+    if (isWeapon) {
+        const ammoInput = card.querySelector('.item-ammo');
+        const ammo = parseInt(ammoInput?.value || 250);
+        
+        fetch(`https://${getResourceName()}/giveWeapon`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                targetId: targetId,
+                weapon: itemName,
+                ammo: ammo
+            })
+        }).then(() => {
+            showNotification(itemName + ' an Spieler ' + targetId + ' gegeben', 'success');
+            showFeedback(card, 'success');
+        }).catch(() => {
+            showNotification('Fehler beim Geben: ' + itemName, 'error');
+        });
+    } else {
+        const amountInput = card.querySelector('.item-amount');
+        const amount = parseInt(amountInput?.value || 1);
+        
+        fetch(`https://${getResourceName()}/giveItem`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                targetId: targetId,
+                item: itemName,
+                amount: amount
+            })
+        }).then(() => {
+            showNotification(itemName + ' x' + amount + ' an Spieler ' + targetId + ' gegeben', 'success');
+            showFeedback(card, 'success');
+        }).catch(() => {
+            showNotification('Fehler beim Geben: ' + itemName, 'error');
+        });
+    }
+}
+
 function showFeedback(element, type) {
     element.style.transform = 'scale(0.98)';
     setTimeout(() => {
@@ -432,19 +495,6 @@ function setupEventListeners() {
             applyFilter(filter);
         });
     });
-    
-    // Spawn target dropdown — show/hide player ID input
-    const targetSelect = document.getElementById('spawn-target');
-    if (targetSelect) {
-        targetSelect.addEventListener('change', function() {
-            const playerIdGroup = document.getElementById('player-id-group');
-            if (this.value === 'player') {
-                playerIdGroup.style.display = '';
-            } else {
-                playerIdGroup.style.display = 'none';
-            }
-        });
-    }
 }
 
 function attachCardListeners() {
@@ -568,21 +618,7 @@ function renderPlayers() {
 }
 
 function selectPlayer(playerId, playerName) {
-    // Fill in the player ID input in the spawn panel
-    const playerIdInput = document.getElementById('spawn-player-id');
-    if (playerIdInput) playerIdInput.value = playerId;
-    
-    // Switch spawn target to player mode and show ID field
-    const targetSelect = document.getElementById('spawn-target');
-    targetSelect.value = 'player';
-    const playerIdGroup = document.getElementById('player-id-group');
-    if (playerIdGroup) playerIdGroup.style.display = '';
-    
-    // Show selected player in info
-    document.getElementById('selected-item').textContent = 
-        selectedItem ? selectedItem + ' → ' + playerName : 'Spieler: ' + playerName;
-    
-    showNotification('Spieler ausgewählt: ' + playerName + ' (ID: ' + playerId + ')', 'info');
+    showNotification('Spieler ' + playerName + ' hat ID: ' + playerId + ' — gib diese ID bei "Geben" ein', 'info');
 }
 
 function spawnSelected() {
@@ -593,81 +629,40 @@ function spawnSelected() {
     
     const ammo = parseInt(document.getElementById('spawn-ammo').value) || 250;
     const amount = parseInt(document.getElementById('spawn-amount').value) || 1;
-    const target = document.getElementById('spawn-target').value;
     
     const isWeapon = !ITEM_CATEGORIES.includes(currentCategory);
     
-    if (target === 'player') {
-        const playerIdEl = document.getElementById('spawn-player-id');
-        const targetId = playerIdEl ? parseInt(playerIdEl.value) : NaN;
-        if (!targetId || targetId < 1) {
-            showNotification('Bitte eine gültige Spieler-ID eingeben', 'error');
-            return;
-        }
-        
-        if (isWeapon) {
-            fetch(`https://${getResourceName()}/giveWeapon`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    targetId: targetId,
-                    weapon: selectedItem,
-                    ammo: ammo
-                })
-            }).then(() => {
-                showNotification('Waffe ' + selectedItem + ' an Spieler ' + targetId + ' gegeben', 'success');
-            }).catch(() => {
-                showNotification('Fehler beim Geben der Waffe', 'error');
-            });
-        } else {
-            fetch(`https://${getResourceName()}/giveItem`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    targetId: targetId,
-                    item: selectedItem,
-                    amount: amount
-                })
-            }).then(() => {
-                showNotification('Item ' + selectedItem + ' x' + amount + ' an Spieler ' + targetId + ' gegeben', 'success');
-            }).catch(() => {
-                showNotification('Fehler beim Geben des Items', 'error');
-            });
-        }
+    if (isWeapon) {
+        fetch(`https://${getResourceName()}/spawnWeapon`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                weapon: selectedItem,
+                amount: amount,
+                ammo: ammo
+            })
+        }).then(res => res.json()).then(data => {
+            if (data && data.success) {
+                showNotification('Waffe gespawnt: ' + selectedItem, 'success');
+            }
+        }).catch(() => {
+            showNotification('Fehler beim Spawnen', 'error');
+        });
     } else {
-        // Spawn for self
-        if (isWeapon) {
-            fetch(`https://${getResourceName()}/spawnWeapon`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    weapon: selectedItem,
-                    amount: amount,
-                    ammo: ammo
-                })
-            }).then(res => res.json()).then(data => {
-                if (data && data.success) {
-                    showNotification('Waffe gespawnt: ' + selectedItem, 'success');
-                }
-            }).catch(() => {
-                showNotification('Fehler beim Spawnen', 'error');
-            });
-        } else {
-            fetch(`https://${getResourceName()}/spawnItem`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    item: selectedItem,
-                    amount: amount
-                })
-            }).then(res => res.json()).then(data => {
-                if (data && data.success) {
-                    showNotification('Item gespawnt: ' + selectedItem + ' x' + amount, 'success');
-                }
-            }).catch(() => {
-                showNotification('Fehler beim Spawnen', 'error');
-            });
-        }
+        fetch(`https://${getResourceName()}/spawnItem`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                item: selectedItem,
+                amount: amount
+            })
+        }).then(res => res.json()).then(data => {
+            if (data && data.success) {
+                showNotification('Item gespawnt: ' + selectedItem + ' x' + amount, 'success');
+            }
+        }).catch(() => {
+            showNotification('Fehler beim Spawnen', 'error');
+        });
     }
 }
 
@@ -712,9 +707,6 @@ function resetUI() {
     document.getElementById('global-search').value = '';
     document.getElementById('selected-item').textContent = 'Keine Auswahl';
     document.getElementById('spawn-btn').disabled = true;
-    document.getElementById('spawn-target').value = 'self';
-    document.getElementById('spawn-player-id').value = '';
-    document.getElementById('player-id-group').style.display = 'none';
 }
 
 // ==========================================
