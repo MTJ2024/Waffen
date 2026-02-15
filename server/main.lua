@@ -126,9 +126,11 @@ end
 function AddWeapon(source, weaponName, ammo)
     if Framework == "ox_inventory" then
         -- ox_inventory uses weapon items with metadata
+        -- Note: Do NOT set 'durability' here — ox_inventory manages durability
+        -- internally via its time-based degrade system. Setting a static value
+        -- causes "Haltbarkeit abgelaufen" (durability expired) errors.
         local metadata = {
             ammo = ammo,
-            durability = 100,
             serial = "WF-" .. math.random(100000, 999999)
         }
         local success = exports.ox_inventory:AddItem(source, weaponName, 1, metadata)
