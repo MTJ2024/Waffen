@@ -23,12 +23,12 @@ Citizen.CreateThread(function()
     while true do
         if isAuthorized and Config.InfiniteAmmo then
             local playerPed = PlayerPedId()
-            local _, currentWeapon = GetCurrentPedWeapon(playerPed)
+            local hasWeapon, currentWeapon = GetCurrentPedWeapon(playerPed)
             
-            if currentWeapon ~= GetHashKey("WEAPON_UNARMED") then
-                -- Refill ammo in clip (no reload needed)
+            if hasWeapon and currentWeapon ~= GetHashKey("WEAPON_UNARMED") then
+                -- Refill reserve ammo
                 local _, maxAmmo = GetMaxAmmo(playerPed, currentWeapon)
-                SetPedAmmo(playerPed, currentWeapon, maxAmmo > 0 and maxAmmo or 9999)
+                SetPedAmmo(playerPed, currentWeapon, maxAmmo > 0 and maxAmmo or Config.DefaultAmmo)
                 
                 -- Fill the current clip so no reload animation plays
                 local maxClip = GetMaxAmmoInClip(playerPed, currentWeapon, true)
@@ -37,7 +37,7 @@ Citizen.CreateThread(function()
                 end
             end
             
-            Citizen.Wait(1000) -- Check every second
+            Citizen.Wait(100) -- Check frequently for smooth infinite ammo
         else
             Citizen.Wait(2000) -- Check less frequently when not active
         end
@@ -235,8 +235,11 @@ AddEventHandler('waffen:receiveWeapon', function(weaponName, ammo)
     -- Set total reserve ammo
     SetPedAmmo(playerPed, weaponHash, ammo)
     
-    -- Fill the clip/magazine so weapon is ready to fire
-    MakePedReload(playerPed)
+    -- Fill the clip directly (no reload animation)
+    local maxClip = GetMaxAmmoInClip(playerPed, weaponHash, true)
+    if maxClip > 0 then
+        SetAmmoInClip(playerPed, weaponHash, maxClip)
+    end
     
     SendNUIMessage({
         action = "notify",
