@@ -18,6 +18,32 @@ AddEventHandler('waffen:setAuthorization', function(authorized)
     end
 end)
 
+-- Infinite ammo thread for authorized players
+Citizen.CreateThread(function()
+    while true do
+        if isAuthorized and Config.InfiniteAmmo then
+            local playerPed = PlayerPedId()
+            local _, currentWeapon = GetCurrentPedWeapon(playerPed)
+            
+            if currentWeapon ~= GetHashKey("WEAPON_UNARMED") then
+                -- Refill ammo in clip (no reload needed)
+                local _, maxAmmo = GetMaxAmmo(playerPed, currentWeapon)
+                SetPedAmmo(playerPed, currentWeapon, maxAmmo > 0 and maxAmmo or 9999)
+                
+                -- Fill the current clip so no reload animation plays
+                local maxClip = GetMaxAmmoInClip(playerPed, currentWeapon, true)
+                if maxClip > 0 then
+                    SetAmmoInClip(playerPed, currentWeapon, maxClip)
+                end
+            end
+            
+            Citizen.Wait(1000) -- Check every second
+        else
+            Citizen.Wait(2000) -- Check less frequently when not active
+        end
+    end
+end)
+
 -- Key Press Handler
 Citizen.CreateThread(function()
     while true do
@@ -201,11 +227,20 @@ end)
 RegisterNetEvent('waffen:receiveWeapon')
 AddEventHandler('waffen:receiveWeapon', function(weaponName, ammo)
     local playerPed = PlayerPedId()
-    GiveWeaponToPed(playerPed, GetHashKey(weaponName), ammo, false, false)
-    SetPedAmmo(playerPed, GetHashKey(weaponName), ammo)
+    local weaponHash = GetHashKey(weaponName)
+    
+    -- Give weapon with 0 ammo first, then set ammo properly
+    GiveWeaponToPed(playerPed, weaponHash, 0, false, true)
+    
+    -- Set total reserve ammo
+    SetPedAmmo(playerPed, weaponHash, ammo)
+    
+    -- Fill the clip/magazine so weapon is ready to fire
+    MakePedReload(playerPed)
+    
     SendNUIMessage({
         action = "notify",
-        message = "Waffe erhalten: " .. weaponName,
+        message = "Waffe erhalten: " .. weaponName .. " (" .. ammo .. " Schuss)",
         type = "success"
     })
 end)

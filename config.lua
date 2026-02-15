@@ -29,6 +29,10 @@ Config.AuthorizedPlayers = {
 Config.OpenKey = 'F9'
 Config.DefaultAmmo = 250
 
+-- Unendliche Munition für autorisierte Spieler
+-- Wenn aktiviert, wird Munition nicht verbraucht und Nachladen ist nicht nötig
+Config.InfiniteAmmo = true
+
 -- Munitions-Mapping: Welche Waffe nutzt welche Munition
 Config.WeaponAmmo = {
     -- Pistolen
