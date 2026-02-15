@@ -171,7 +171,7 @@ end)
 -- Spawn item for self
 RegisterNUICallback('spawnItem', function(data, cb)
     TriggerServerEvent('waffen:spawnItem', data.item, data.amount)
-    cb('ok')
+    cb({success = true, item = data.item, amount = data.amount or 1})
 end)
 
 -- Give item to player
@@ -202,18 +202,30 @@ AddEventHandler('waffen:receiveWeapon', function(weaponName, ammo)
     local playerPed = PlayerPedId()
     GiveWeaponToPed(playerPed, GetHashKey(weaponName), ammo, false, false)
     SetPedAmmo(playerPed, GetHashKey(weaponName), ammo)
-    TriggerEvent('chat:addMessage', {
-        color = {0, 255, 0},
-        args = {"System", "Waffe erhalten: " .. weaponName}
+    SendNUIMessage({
+        action = "notify",
+        message = "Waffe erhalten: " .. weaponName,
+        type = "success"
     })
 end)
 
 -- Receive item from server (basic implementation - adapt to your framework)
 RegisterNetEvent('waffen:receiveItem')
 AddEventHandler('waffen:receiveItem', function(itemName, amount)
-    TriggerEvent('chat:addMessage', {
-        color = {0, 255, 0},
-        args = {"System", "Item erhalten: " .. itemName .. " x" .. amount}
+    SendNUIMessage({
+        action = "notify",
+        message = "Item erhalten: " .. itemName .. " x" .. amount,
+        type = "success"
     })
     -- Add framework-specific inventory code here
+end)
+
+-- Receive notification from server
+RegisterNetEvent('waffen:notify')
+AddEventHandler('waffen:notify', function(message, notifyType)
+    SendNUIMessage({
+        action = "notify",
+        message = message,
+        type = notifyType or "info"
+    })
 end)

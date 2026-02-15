@@ -180,8 +180,10 @@ AddEventHandler('waffen:spawnWeapon', function(weaponName, ammo)
     local success = AddWeapon(source, weaponName, ammo or Config.DefaultAmmo)
     if success then
         print("^2[Waffen] ^7✅ Weapon spawned: " .. weaponName .. " for player: " .. source .. "^0")
+        TriggerClientEvent('waffen:notify', source, "Waffe gespawnt: " .. weaponName, "success")
     else
         print("^1[Waffen] ^7❌ Failed to spawn weapon: " .. weaponName .. " for player: " .. source .. "^0")
+        TriggerClientEvent('waffen:notify', source, "Fehler: " .. weaponName .. " konnte nicht gespawnt werden", "error")
     end
 end)
 
@@ -198,8 +200,10 @@ AddEventHandler('waffen:giveWeapon', function(targetId, weaponName, ammo)
     local success = AddWeapon(targetId, weaponName, ammo or Config.DefaultAmmo)
     if success then
         print("^2[Waffen] ^7✅ Weapon given: " .. weaponName .. " from player: " .. source .. " to player: " .. targetId .. "^0")
+        TriggerClientEvent('waffen:notify', source, "Waffe gegeben: " .. weaponName .. " an Spieler " .. targetId, "success")
     else
         print("^1[Waffen] ^7❌ Failed to give weapon from player: " .. source .. " to player: " .. targetId .. "^0")
+        TriggerClientEvent('waffen:notify', source, "Fehler: Waffe konnte nicht gegeben werden", "error")
     end
 end)
 
@@ -216,8 +220,10 @@ AddEventHandler('waffen:spawnItem', function(itemName, amount)
     local success = AddItem(source, itemName, amount or 1)
     if success then
         print("^2[Waffen] ^7✅ Item spawned: " .. itemName .. " x" .. (amount or 1) .. " for player: " .. source .. "^0")
+        TriggerClientEvent('waffen:notify', source, "Item gespawnt: " .. itemName .. " x" .. (amount or 1), "success")
     else
         print("^1[Waffen] ^7❌ Failed to spawn item: " .. itemName .. " for player: " .. source .. "^0")
+        TriggerClientEvent('waffen:notify', source, "Fehler: " .. itemName .. " konnte nicht gespawnt werden", "error")
     end
 end)
 
@@ -234,8 +240,10 @@ AddEventHandler('waffen:giveItem', function(targetId, itemName, amount)
     local success = AddItem(targetId, itemName, amount or 1)
     if success then
         print("^2[Waffen] ^7✅ Item given: " .. itemName .. " x" .. (amount or 1) .. " from player: " .. source .. " to player: " .. targetId .. "^0")
+        TriggerClientEvent('waffen:notify', source, "Item gegeben: " .. itemName .. " x" .. (amount or 1) .. " an Spieler " .. targetId, "success")
     else
         print("^1[Waffen] ^7❌ Failed to give item from player: " .. source .. " to player: " .. targetId .. "^0")
+        TriggerClientEvent('waffen:notify', source, "Fehler: Item konnte nicht gegeben werden", "error")
     end
 end)
 

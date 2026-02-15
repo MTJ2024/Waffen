@@ -59,6 +59,10 @@ window.addEventListener('message', function(event) {
             resetUI();
         }
     }
+    
+    if (data.action === 'notify') {
+        showNotification(data.message, data.type || 'info');
+    }
 });
 
 // Close UI
@@ -301,8 +305,15 @@ function spawnItem(itemName, category) {
                 amount: 1,
                 ammo: ammo
             })
-        }).then(() => {
+        }).then(res => res.json()).then(data => {
             showFeedback(card, 'success');
+            if (data && data.success) {
+                showNotification('Waffe gespawnt: ' + (data.weapon || itemName), 'success');
+            } else {
+                showNotification('Fehler beim Spawnen: ' + (data.error || itemName), 'error');
+            }
+        }).catch(err => {
+            showNotification('Fehler beim Spawnen: ' + itemName, 'error');
         });
     } else {
         const amountInput = card.querySelector('.item-amount');
@@ -315,8 +326,15 @@ function spawnItem(itemName, category) {
                 item: itemName,
                 amount: amount
             })
-        }).then(() => {
+        }).then(res => res.json()).then(data => {
             showFeedback(card, 'success');
+            if (data && data.success) {
+                showNotification('Item gespawnt: ' + (data.item || itemName) + ' x' + (data.amount || amount), 'success');
+            } else {
+                showNotification('Fehler beim Spawnen: ' + (data.error || itemName), 'error');
+            }
+        }).catch(err => {
+            showNotification('Fehler beim Spawnen: ' + itemName, 'error');
         });
     }
 }
@@ -328,12 +346,37 @@ function showFeedback(element, type) {
     }, 100);
 }
 
+function showNotification(message, type) {
+    type = type || 'info';
+    const container = document.getElementById('notification-container');
+    if (!container) return;
+    
+    const notif = document.createElement('div');
+    notif.className = 'notification ' + type;
+    
+    var icon = '✅';
+    if (type === 'error') icon = '❌';
+    if (type === 'info') icon = 'ℹ️';
+    
+    notif.innerHTML = '<span>' + icon + '</span><span>' + message + '</span>';
+    container.appendChild(notif);
+    
+    setTimeout(function() {
+        notif.classList.add('hide');
+        setTimeout(function() {
+            if (notif.parentNode) notif.parentNode.removeChild(notif);
+        }, 300);
+    }, 3000);
+}
+
 function removeAllWeapons() {
     if (confirm('Alle Waffen entfernen?')) {
         fetch(`https://${getResourceName()}/removeAllWeapons`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({})
+        }).then(() => {
+            showNotification('Alle Waffen entfernt', 'success');
         });
     }
 }
