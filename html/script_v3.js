@@ -474,6 +474,12 @@ function applyFilter(filter) {
 // PLAYER LIST & GIVE-TO-PLAYER
 // ==========================================
 
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}
+
 function loadPlayers() {
     fetch(`https://${getResourceName()}/getPlayers`, {
         method: 'POST',
@@ -519,17 +525,20 @@ function renderPlayers() {
     `;
 
     playersData.forEach(player => {
+        const safeName = escapeHtml(player.name);
+        const safeId = parseInt(player.id) || 0;
+        const safeDist = parseInt(player.distance) || 0;
         html += `
-            <div class="item-card player-card" data-player-id="${player.id}">
+            <div class="item-card player-card" data-player-id="${safeId}" data-player-name="${safeName}">
                 <div class="item-header">
                     <div>
-                        <div class="item-name">👤 ${player.name}</div>
-                        <div class="item-id">ID: ${player.id} | ${player.distance}m entfernt</div>
+                        <div class="item-name">👤 ${safeName}</div>
+                        <div class="item-id">ID: ${safeId} | ${safeDist}m entfernt</div>
                     </div>
                     <div class="item-category-badge">Spieler</div>
                 </div>
                 <div class="item-controls">
-                    <button class="btn-spawn-card" onclick="selectPlayer(${player.id}, '${player.name}')">
+                    <button class="btn-spawn-card btn-select-player">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                             <path d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="2"/>
                         </svg>
@@ -546,6 +555,16 @@ function renderPlayers() {
     `;
 
     contentBody.innerHTML = html;
+    
+    // Attach event listeners via JS instead of inline onclick
+    contentBody.querySelectorAll('.btn-select-player').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const card = this.closest('.player-card');
+            const playerId = parseInt(card.getAttribute('data-player-id'));
+            const playerName = card.getAttribute('data-player-name');
+            selectPlayer(playerId, playerName);
+        });
+    });
 }
 
 let selectedPlayerId = null;

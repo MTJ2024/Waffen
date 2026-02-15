@@ -209,10 +209,10 @@ end
 function AddItem(source, itemName, amount)
     if InventorySystem ~= "none" and InventoryExport then
         -- All detected inventory systems support AddItem export
-        local success = pcall(function()
+        local ok, result = pcall(function()
             return InventoryExport:AddItem(source, itemName, amount)
         end)
-        if success then
+        if ok and result then
             print("^2[Waffen] ^7" .. InventorySystem .. ": Added " .. itemName .. " x" .. amount .. " to player " .. source .. "^0")
             return true
         else
@@ -253,10 +253,10 @@ function AddWeapon(source, weaponName, ammo)
             ammo = ammo,
             serial = "WF-" .. math.random(100000, 999999)
         }
-        local success = pcall(function()
+        local ok, result = pcall(function()
             return InventoryExport:AddItem(source, weaponName, 1, metadata)
         end)
-        if success then
+        if ok and result then
             print("^2[Waffen] ^7" .. InventorySystem .. ": Added weapon " .. weaponName .. " with " .. ammo .. " ammo to player " .. source .. "^0")
             return true
         else
