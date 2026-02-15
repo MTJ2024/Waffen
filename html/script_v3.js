@@ -433,15 +433,15 @@ function setupEventListeners() {
         });
     });
     
-    // Spawn target dropdown — load players when "player" is selected
+    // Spawn target dropdown — show/hide player ID input
     const targetSelect = document.getElementById('spawn-target');
     if (targetSelect) {
         targetSelect.addEventListener('change', function() {
+            const playerIdGroup = document.getElementById('player-id-group');
             if (this.value === 'player') {
-                loadPlayers();
+                playerIdGroup.style.display = '';
             } else {
-                selectedPlayerId = null;
-                selectedPlayerName = null;
+                playerIdGroup.style.display = 'none';
             }
         });
     }
@@ -567,16 +567,15 @@ function renderPlayers() {
     });
 }
 
-let selectedPlayerId = null;
-let selectedPlayerName = null;
-
 function selectPlayer(playerId, playerName) {
-    selectedPlayerId = playerId;
-    selectedPlayerName = playerName;
+    // Fill in the player ID input in the spawn panel
+    const playerIdInput = document.getElementById('spawn-player-id');
+    if (playerIdInput) playerIdInput.value = playerId;
     
-    // Update spawn target dropdown
+    // Switch spawn target to player mode and show ID field
     const targetSelect = document.getElementById('spawn-target');
     targetSelect.value = 'player';
+    document.getElementById('player-id-group').style.display = '';
     
     // Show selected player in info
     document.getElementById('selected-item').textContent = 
@@ -598,8 +597,9 @@ function spawnSelected() {
     const isWeapon = !ITEM_CATEGORIES.includes(currentCategory);
     
     if (target === 'player') {
-        if (!selectedPlayerId) {
-            showNotification('Bitte zuerst einen Spieler auswählen (Spieler-Kategorie)', 'error');
+        const targetId = parseInt(document.getElementById('spawn-player-id').value);
+        if (!targetId || targetId < 1) {
+            showNotification('Bitte eine gültige Spieler-ID eingeben', 'error');
             return;
         }
         
@@ -608,12 +608,12 @@ function spawnSelected() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    targetId: selectedPlayerId,
+                    targetId: targetId,
                     weapon: selectedItem,
                     ammo: ammo
                 })
             }).then(() => {
-                showNotification('Waffe ' + selectedItem + ' an ' + selectedPlayerName + ' gegeben', 'success');
+                showNotification('Waffe ' + selectedItem + ' an Spieler ' + targetId + ' gegeben', 'success');
             }).catch(() => {
                 showNotification('Fehler beim Geben der Waffe', 'error');
             });
@@ -622,12 +622,12 @@ function spawnSelected() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    targetId: selectedPlayerId,
+                    targetId: targetId,
                     item: selectedItem,
                     amount: amount
                 })
             }).then(() => {
-                showNotification('Item ' + selectedItem + ' x' + amount + ' an ' + selectedPlayerName + ' gegeben', 'success');
+                showNotification('Item ' + selectedItem + ' x' + amount + ' an Spieler ' + targetId + ' gegeben', 'success');
             }).catch(() => {
                 showNotification('Fehler beim Geben des Items', 'error');
             });
@@ -707,12 +707,12 @@ function getResourceName() {
 function resetUI() {
     searchTerm = '';
     selectedItem = null;
-    selectedPlayerId = null;
-    selectedPlayerName = null;
     document.getElementById('global-search').value = '';
     document.getElementById('selected-item').textContent = 'Keine Auswahl';
     document.getElementById('spawn-btn').disabled = true;
     document.getElementById('spawn-target').value = 'self';
+    document.getElementById('spawn-player-id').value = '';
+    document.getElementById('player-id-group').style.display = 'none';
 }
 
 // ==========================================
