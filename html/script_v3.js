@@ -354,16 +354,16 @@ function showNotification(message, type) {
     const notif = document.createElement('div');
     notif.className = 'notification ' + type;
     
-    var icon = '✅';
+    let icon = '✅';
     if (type === 'error') icon = '❌';
     if (type === 'info') icon = 'ℹ️';
     
     notif.innerHTML = '<span>' + icon + '</span><span>' + message + '</span>';
     container.appendChild(notif);
     
-    setTimeout(function() {
+    setTimeout(() => {
         notif.classList.add('hide');
-        setTimeout(function() {
+        setTimeout(() => {
             if (notif.parentNode) notif.parentNode.removeChild(notif);
         }, 300);
     }, 3000);

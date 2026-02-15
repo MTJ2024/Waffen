@@ -171,6 +171,7 @@ end)
 -- Spawn item for self
 RegisterNUICallback('spawnItem', function(data, cb)
     TriggerServerEvent('waffen:spawnItem', data.item, data.amount)
+    -- Note: success here means request was sent; actual result comes via waffen:notify event
     cb({success = true, item = data.item, amount = data.amount or 1})
 end)
 
