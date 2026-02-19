@@ -343,14 +343,14 @@ Config.Items = {
     {name = "weapon_scope", label = "Zielfernrohr", category = "Zubehör"},
     {name = "weapon_suppressor", label = "Schalldämpfer", category = "Zubehör"},
     {name = "weapon_grip", label = "Griff", category = "Zubehör"},
-    {name = "weapon_extended_mag", label = "Erweitertes Magazin", category = "Zubehör"},
-    {name = "weapon_skin_luxury", label = "Luxus Waffenskin", category = "Zubehör"},
-    {name = "weapon_skin_tactical", label = "Taktischer Waffenskin", category = "Zubehör"},
+    {name = "weapon_extendedmag", label = "Erweitertes Magazin", category = "Zubehör"},
+    {name = "weapon_luxuryfinish", label = "Luxus Waffenskin", category = "Zubehör"},
+    {name = "weapon_tacticalfinish", label = "Taktischer Waffenskin", category = "Zubehör"},
     
     -- ═══ MEDIZINISCHE ITEMS ═══
     {name = "bandage", label = "Verband", category = "Medizin"},
     {name = "medkit", label = "Erste-Hilfe-Kasten", category = "Medizin"},
-    {name = "painkillers", label = "Schmerzmittel", category = "Medizin"},
+    {name = "painkiller", label = "Schmerzmittel", category = "Medizin"},
     {name = "adrenaline", label = "Adrenalin", category = "Medizin"},
     
     -- ═══ NAHRUNG & GETRÄNKE ═══
@@ -376,8 +376,8 @@ Config.Items = {
     
     -- ═══ SONSTIGES ═══
     {name = "parachute", label = "Fallschirm", category = "Sonstiges"},
-    {name = "jerry_can", label = "Benzinkanister", category = "Sonstiges"},
-    {name = "fire_extinguisher", label = "Feuerlöscher", category = "Sonstiges"},
+    {name = "jerrycan", label = "Benzinkanister", category = "Sonstiges"},
+    {name = "fireextinguisher", label = "Feuerlöscher", category = "Sonstiges"},
     {name = "rope", label = "Seil", category = "Sonstiges"},
     {name = "handcuffs", label = "Handschellen", category = "Sonstiges"},
 }

@@ -1,6 +1,6 @@
 -- ox_inventory Items
 -- Copy this content into: ox_inventory/data/items.lua
--- Total: 148 items
+-- Total: 210 items
 
 
 -- Pistolen
@@ -1059,4 +1059,454 @@
     stack = true,
     close = true,
     description = 'Handschellen'
+},
+
+-- Waffen als Items (Pistolen)
+['weapon_pistol'] = {
+    label = 'Pistol (Item)',
+    weight = 970,
+    stack = false,
+    close = true,
+    description = 'Pistol (Item)'
+},
+['weapon_pistol_mk2'] = {
+    label = 'Pistol Mk II (Item)',
+    weight = 970,
+    stack = false,
+    close = true,
+    description = 'Pistol Mk II (Item)'
+},
+['weapon_combatpistol'] = {
+    label = 'Combat Pistol (Item)',
+    weight = 970,
+    stack = false,
+    close = true,
+    description = 'Combat Pistol (Item)'
+},
+['weapon_appistol'] = {
+    label = 'AP Pistol (Item)',
+    weight = 900,
+    stack = false,
+    close = true,
+    description = 'AP Pistol (Item)'
+},
+['weapon_pistol50'] = {
+    label = 'Pistol .50 (Item)',
+    weight = 1100,
+    stack = false,
+    close = true,
+    description = 'Pistol .50 (Item)'
+},
+['weapon_snspistol'] = {
+    label = 'SNS Pistol (Item)',
+    weight = 465,
+    stack = false,
+    close = true,
+    description = 'SNS Pistol (Item)'
+},
+['weapon_heavypistol'] = {
+    label = 'Heavy Pistol (Item)',
+    weight = 1050,
+    stack = false,
+    close = true,
+    description = 'Heavy Pistol (Item)'
+},
+['weapon_vintagepistol'] = {
+    label = 'Vintage Pistol (Item)',
+    weight = 900,
+    stack = false,
+    close = true,
+    description = 'Vintage Pistol (Item)'
+},
+['weapon_revolver'] = {
+    label = 'Heavy Revolver (Item)',
+    weight = 1100,
+    stack = false,
+    close = true,
+    description = 'Heavy Revolver (Item)'
+},
+['weapon_revolver_mk2'] = {
+    label = 'Heavy Revolver Mk II (Item)',
+    weight = 1100,
+    stack = false,
+    close = true,
+    description = 'Heavy Revolver Mk II (Item)'
+},
+
+-- Waffen als Items (SMGs)
+['weapon_microsmg'] = {
+    label = 'Micro SMG (Item)',
+    weight = 1800,
+    stack = false,
+    close = true,
+    description = 'Micro SMG (Item)'
+},
+['weapon_smg'] = {
+    label = 'SMG (Item)',
+    weight = 3100,
+    stack = false,
+    close = true,
+    description = 'SMG (Item)'
+},
+['weapon_smg_mk2'] = {
+    label = 'SMG Mk II (Item)',
+    weight = 3100,
+    stack = false,
+    close = true,
+    description = 'SMG Mk II (Item)'
+},
+['weapon_assaultsmg'] = {
+    label = 'Assault SMG (Item)',
+    weight = 2900,
+    stack = false,
+    close = true,
+    description = 'Assault SMG (Item)'
+},
+['weapon_combatpdw'] = {
+    label = 'Combat PDW (Item)',
+    weight = 2700,
+    stack = false,
+    close = true,
+    description = 'Combat PDW (Item)'
+},
+['weapon_machinepistol'] = {
+    label = 'Machine Pistol (Item)',
+    weight = 1100,
+    stack = false,
+    close = true,
+    description = 'Machine Pistol (Item)'
+},
+['weapon_minismg'] = {
+    label = 'Mini SMG (Item)',
+    weight = 2300,
+    stack = false,
+    close = true,
+    description = 'Mini SMG (Item)'
+},
+['weapon_tecpistol'] = {
+    label = 'Tactical SMG (Item)',
+    weight = 2500,
+    stack = false,
+    close = true,
+    description = 'Tactical SMG (Item)'
+},
+
+-- Waffen als Items (Schrotflinten)
+['weapon_pumpshotgun'] = {
+    label = 'Pump Shotgun (Item)',
+    weight = 3400,
+    stack = false,
+    close = true,
+    description = 'Pump Shotgun (Item)'
+},
+['weapon_pumpshotgun_mk2'] = {
+    label = 'Pump Shotgun Mk II (Item)',
+    weight = 3400,
+    stack = false,
+    close = true,
+    description = 'Pump Shotgun Mk II (Item)'
+},
+['weapon_sawnoffshotgun'] = {
+    label = 'Sawed-Off Shotgun (Item)',
+    weight = 2700,
+    stack = false,
+    close = true,
+    description = 'Sawed-Off Shotgun (Item)'
+},
+['weapon_assaultshotgun'] = {
+    label = 'Assault Shotgun (Item)',
+    weight = 3500,
+    stack = false,
+    close = true,
+    description = 'Assault Shotgun (Item)'
+},
+['weapon_bullpupshotgun'] = {
+    label = 'Bullpup Shotgun (Item)',
+    weight = 3100,
+    stack = false,
+    close = true,
+    description = 'Bullpup Shotgun (Item)'
+},
+['weapon_heavyshotgun'] = {
+    label = 'Heavy Shotgun (Item)',
+    weight = 3600,
+    stack = false,
+    close = true,
+    description = 'Heavy Shotgun (Item)'
+},
+['weapon_dbshotgun'] = {
+    label = 'Double Barrel Shotgun (Item)',
+    weight = 3000,
+    stack = false,
+    close = true,
+    description = 'Double Barrel Shotgun (Item)'
+},
+['weapon_combatshotgun'] = {
+    label = 'Combat Shotgun (Item)',
+    weight = 3900,
+    stack = false,
+    close = true,
+    description = 'Combat Shotgun (Item)'
+},
+
+-- Waffen als Items (Sturmgewehre)
+['weapon_assaultrifle'] = {
+    label = 'Assault Rifle (Item)',
+    weight = 4500,
+    stack = false,
+    close = true,
+    description = 'Assault Rifle (Item)'
+},
+['weapon_assaultrifle_mk2'] = {
+    label = 'Assault Rifle Mk II (Item)',
+    weight = 4500,
+    stack = false,
+    close = true,
+    description = 'Assault Rifle Mk II (Item)'
+},
+['weapon_carbinerifle'] = {
+    label = 'Carbine Rifle (Item)',
+    weight = 3900,
+    stack = false,
+    close = true,
+    description = 'Carbine Rifle (Item)'
+},
+['weapon_carbinerifle_mk2'] = {
+    label = 'Carbine Rifle Mk II (Item)',
+    weight = 3900,
+    stack = false,
+    close = true,
+    description = 'Carbine Rifle Mk II (Item)'
+},
+['weapon_advancedrifle'] = {
+    label = 'Advanced Rifle (Item)',
+    weight = 4100,
+    stack = false,
+    close = true,
+    description = 'Advanced Rifle (Item)'
+},
+['weapon_specialcarbine'] = {
+    label = 'Special Carbine (Item)',
+    weight = 3800,
+    stack = false,
+    close = true,
+    description = 'Special Carbine (Item)'
+},
+['weapon_specialcarbine_mk2'] = {
+    label = 'Special Carbine Mk II (Item)',
+    weight = 3800,
+    stack = false,
+    close = true,
+    description = 'Special Carbine Mk II (Item)'
+},
+['weapon_bullpuprifle'] = {
+    label = 'Bullpup Rifle (Item)',
+    weight = 3700,
+    stack = false,
+    close = true,
+    description = 'Bullpup Rifle (Item)'
+},
+['weapon_bullpuprifle_mk2'] = {
+    label = 'Bullpup Rifle Mk II (Item)',
+    weight = 3700,
+    stack = false,
+    close = true,
+    description = 'Bullpup Rifle Mk II (Item)'
+},
+['weapon_compactrifle'] = {
+    label = 'Compact Rifle (Item)',
+    weight = 3600,
+    stack = false,
+    close = true,
+    description = 'Compact Rifle (Item)'
+},
+['weapon_militaryrifle'] = {
+    label = 'Military Rifle (Item)',
+    weight = 4300,
+    stack = false,
+    close = true,
+    description = 'Military Rifle (Item)'
+},
+['weapon_heavyrifle'] = {
+    label = 'Heavy Rifle (Item)',
+    weight = 4200,
+    stack = false,
+    close = true,
+    description = 'Heavy Rifle (Item)'
+},
+['weapon_tacticalrifle'] = {
+    label = 'Tactical Rifle (Item)',
+    weight = 4000,
+    stack = false,
+    close = true,
+    description = 'Tactical Rifle (Item)'
+},
+['weapon_battlerifle'] = {
+    label = 'Battle Rifle (Item)',
+    weight = 4400,
+    stack = false,
+    close = true,
+    description = 'Battle Rifle (Item)'
+},
+
+-- Waffen als Items (Scharfschützengewehre)
+['weapon_sniperrifle'] = {
+    label = 'Sniper Rifle (Item)',
+    weight = 5500,
+    stack = false,
+    close = true,
+    description = 'Sniper Rifle (Item)'
+},
+['weapon_heavysniper'] = {
+    label = 'Heavy Sniper (Item)',
+    weight = 7000,
+    stack = false,
+    close = true,
+    description = 'Heavy Sniper (Item)'
+},
+['weapon_heavysniper_mk2'] = {
+    label = 'Heavy Sniper Mk II (Item)',
+    weight = 7000,
+    stack = false,
+    close = true,
+    description = 'Heavy Sniper Mk II (Item)'
+},
+['weapon_marksmanrifle'] = {
+    label = 'Marksman Rifle (Item)',
+    weight = 4500,
+    stack = false,
+    close = true,
+    description = 'Marksman Rifle (Item)'
+},
+['weapon_marksmanrifle_mk2'] = {
+    label = 'Marksman Rifle Mk II (Item)',
+    weight = 4500,
+    stack = false,
+    close = true,
+    description = 'Marksman Rifle Mk II (Item)'
+},
+['weapon_precisionrifle'] = {
+    label = 'Precision Rifle (Item)',
+    weight = 5000,
+    stack = false,
+    close = true,
+    description = 'Precision Rifle (Item)'
+},
+
+-- Waffen als Items (Schwere Waffen)
+['weapon_rpg'] = {
+    label = 'RPG (Item)',
+    weight = 5000,
+    stack = false,
+    close = true,
+    description = 'RPG (Item)'
+},
+['weapon_grenadelauncher'] = {
+    label = 'Grenade Launcher (Item)',
+    weight = 6000,
+    stack = false,
+    close = true,
+    description = 'Grenade Launcher (Item)'
+},
+['weapon_minigun'] = {
+    label = 'Minigun (Item)',
+    weight = 38000,
+    stack = false,
+    close = true,
+    description = 'Minigun (Item)'
+},
+['weapon_railgun'] = {
+    label = 'Railgun (Item)',
+    weight = 8000,
+    stack = false,
+    close = true,
+    description = 'Railgun (Item)'
+},
+['weapon_hominglauncher'] = {
+    label = 'Homing Launcher (Item)',
+    weight = 7000,
+    stack = false,
+    close = true,
+    description = 'Homing Launcher (Item)'
+},
+
+-- Waffen als Items (Nahkampf)
+['weapon_knife'] = {
+    label = 'Knife (Item)',
+    weight = 300,
+    stack = false,
+    close = true,
+    description = 'Knife (Item)'
+},
+['weapon_bat'] = {
+    label = 'Baseball Bat (Item)',
+    weight = 900,
+    stack = false,
+    close = true,
+    description = 'Baseball Bat (Item)'
+},
+['weapon_crowbar'] = {
+    label = 'Crowbar (Item)',
+    weight = 1000,
+    stack = false,
+    close = true,
+    description = 'Crowbar (Item)'
+},
+['weapon_machete'] = {
+    label = 'Machete (Item)',
+    weight = 1000,
+    stack = false,
+    close = true,
+    description = 'Machete (Item)'
+},
+['weapon_switchblade'] = {
+    label = 'Switchblade (Item)',
+    weight = 300,
+    stack = false,
+    close = true,
+    description = 'Switchblade (Item)'
+},
+['weapon_battleaxe'] = {
+    label = 'Battle Axe (Item)',
+    weight = 1200,
+    stack = false,
+    close = true,
+    description = 'Battle Axe (Item)'
+},
+
+-- Wurfwaffen als Items
+['weapon_grenade'] = {
+    label = 'Grenade (Item)',
+    weight = 350,
+    stack = true,
+    close = true,
+    description = 'Grenade (Item)'
+},
+['weapon_molotov'] = {
+    label = 'Molotov Cocktail (Item)',
+    weight = 450,
+    stack = true,
+    close = true,
+    description = 'Molotov Cocktail (Item)'
+},
+['weapon_stickybomb'] = {
+    label = 'Sticky Bomb (Item)',
+    weight = 450,
+    stack = true,
+    close = true,
+    description = 'Sticky Bomb (Item)'
+},
+['weapon_proxmine'] = {
+    label = 'Proximity Mine (Item)',
+    weight = 500,
+    stack = true,
+    close = true,
+    description = 'Proximity Mine (Item)'
+},
+['weapon_smokegrenade'] = {
+    label = 'Smoke Grenade (Item)',
+    weight = 350,
+    stack = true,
+    close = true,
+    description = 'Smoke Grenade (Item)'
 },
