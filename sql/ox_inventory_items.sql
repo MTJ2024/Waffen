@@ -1,6 +1,6 @@
 -- ox_inventory Items
 -- Copy this content into: ox_inventory/data/items.lua
--- Total: 271 items
+-- Total: 210 items
 
 
 -- Pistolen
@@ -843,494 +843,55 @@
     close = true,
     description = 'Panzerbrechende Munition'
 },
+-- Waffenzubehör
 ['weapon_flashlight'] = {
-    label = 'Taschenlampe Aufsatz (Legacy)',
+    label = 'Taschenlampe Aufsatz',
     weight = 50,
     stack = true,
     close = true,
     description = 'Taschenlampe Aufsatz'
 },
-
--- Waffenzubehör (GTA V Online Komponenten)
--- Taschenlampen-Aufsätze
-['COMPONENT_AT_AR_FLSH'] = {
-    label = 'Taschenlampe (Gewehr/SMG)',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Taschenlampe Aufsatz für Gewehre und SMGs'
-},
-['COMPONENT_AT_PI_FLSH'] = {
-    label = 'Taschenlampe (Pistole)',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Taschenlampe Aufsatz für Pistolen'
-},
-['COMPONENT_AT_PI_FLSH_02'] = {
-    label = 'Taschenlampe v2 (Pistole)',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Taschenlampe Aufsatz v2 für Pistolen'
-},
--- Zielfernrohre
-['COMPONENT_AT_SCOPE_MACRO'] = {
-    label = 'Scope klein (Pistole/SMG)',
-    weight = 150,
-    stack = true,
-    close = true,
-    description = 'Kleines Zielfernrohr für Pistolen und SMGs'
-},
-['COMPONENT_AT_SCOPE_MACRO_02'] = {
-    label = 'Scope klein v2 (Pistole/SMG)',
-    weight = 150,
-    stack = true,
-    close = true,
-    description = 'Kleines Zielfernrohr v2'
-},
-['COMPONENT_AT_SCOPE_SMALL'] = {
-    label = 'Kurzes Scope',
+['weapon_scope'] = {
+    label = 'Zielfernrohr',
     weight = 200,
     stack = true,
     close = true,
-    description = 'Kurzes Zielfernrohr'
+    description = 'Zielfernrohr'
 },
-['COMPONENT_AT_SCOPE_SMALL_02'] = {
-    label = 'Kurzes Scope v2',
-    weight = 200,
-    stack = true,
-    close = true,
-    description = 'Kurzes Zielfernrohr v2'
-},
-['COMPONENT_AT_SCOPE_MEDIUM'] = {
-    label = 'Scope Mittel',
-    weight = 250,
-    stack = true,
-    close = true,
-    description = 'Mittleres Zielfernrohr'
-},
-['COMPONENT_AT_SCOPE_LARGE'] = {
-    label = 'Scope Groß',
+['weapon_suppressor'] = {
+    label = 'Schalldämpfer',
     weight = 300,
     stack = true,
     close = true,
-    description = 'Großes Zielfernrohr'
+    description = 'Schalldämpfer'
 },
-['COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM'] = {
-    label = 'Scope Fixiert (Sniper)',
-    weight = 350,
+['weapon_grip'] = {
+    label = 'Griff',
+    weight = 100,
     stack = true,
     close = true,
-    description = 'Fixiertes Sniper-Zielfernrohr'
+    description = 'Griff'
 },
-['COMPONENT_AT_SCOPE_NV'] = {
-    label = 'Nachtsichtvisier',
-    weight = 400,
+['weapon_extendedmag'] = {
+    label = 'Erweitertes Magazin',
+    weight = 150,
     stack = true,
     close = true,
-    description = 'Nachtsicht-Zielfernrohr'
+    description = 'Erweitertes Magazin'
 },
-['COMPONENT_AT_SCOPE_THERMAL'] = {
-    label = 'Wärmesichtvisier',
-    weight = 450,
-    stack = true,
-    close = true,
-    description = 'Wärmesicht-Zielfernrohr'
-},
-['COMPONENT_AT_SCOPE_MAX'] = {
-    label = 'Maximales Scope',
+['weapon_luxuryfinish'] = {
+    label = 'Luxus Waffenskin',
     weight = 500,
-    stack = true,
+    stack = false,
     close = true,
-    description = 'Maximales Zielfernrohr'
+    description = 'Luxus Waffenskin'
 },
--- Schalldämpfer
-['COMPONENT_AT_AR_SUPP'] = {
-    label = 'Schalldämpfer (Gewehr)',
-    weight = 300,
-    stack = true,
-    close = true,
-    description = 'Schalldämpfer für Gewehre'
-},
-['COMPONENT_AT_AR_SUPP_02'] = {
-    label = 'Schalldämpfer v2 (Gewehr)',
-    weight = 300,
-    stack = true,
-    close = true,
-    description = 'Schalldämpfer v2 für Gewehre'
-},
-['COMPONENT_AT_PI_SUPP_02'] = {
-    label = 'Schalldämpfer (Pistole)',
-    weight = 250,
-    stack = true,
-    close = true,
-    description = 'Schalldämpfer für Pistolen'
-},
-['COMPONENT_AT_SG_SUPP'] = {
-    label = 'Schalldämpfer (Schrotflinte)',
-    weight = 350,
-    stack = true,
-    close = true,
-    description = 'Schalldämpfer für Schrotflinten'
-},
-['COMPONENT_AT_SG_SUPP_03'] = {
-    label = 'Schalldämpfer v3 (Schrotflinte)',
-    weight = 350,
-    stack = true,
-    close = true,
-    description = 'Schalldämpfer v3 für Schrotflinten'
-},
-['COMPONENT_AT_SR_SUPP'] = {
-    label = 'Schalldämpfer (Sniper)',
+['weapon_tacticalfinish'] = {
+    label = 'Taktischer Waffenskin',
     weight = 400,
-    stack = true,
+    stack = false,
     close = true,
-    description = 'Schalldämpfer für Scharfschützengewehre'
-},
-['COMPONENT_AT_SR_SUPP_03'] = {
-    label = 'Schalldämpfer v3 (Sniper)',
-    weight = 400,
-    stack = true,
-    close = true,
-    description = 'Schalldämpfer v3 für Scharfschützengewehre'
-},
--- Griffe
-['COMPONENT_AT_AR_AFGRIP'] = {
-    label = 'Untergriff (Gewehr)',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Untergriff für Gewehre'
-},
-['COMPONENT_AT_AR_AFGRIP_02'] = {
-    label = 'Untergriff v2 (Gewehr)',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Untergriff v2 für Gewehre'
-},
--- Mündungsbremsen
-['COMPONENT_AT_MUZZLE_1'] = {
-    label = 'Flache Mündungsbremse',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Flache Mündungsbremse'
-},
-['COMPONENT_AT_MUZZLE_2'] = {
-    label = 'Taktische Mündungsbremse',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Taktische Mündungsbremse'
-},
-['COMPONENT_AT_MUZZLE_3'] = {
-    label = 'Fette Mündungsbremse',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Fette Mündungsbremse'
-},
-['COMPONENT_AT_MUZZLE_4'] = {
-    label = 'Präzise Mündungsbremse',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Präzise Mündungsbremse'
-},
-['COMPONENT_AT_MUZZLE_5'] = {
-    label = 'Schwere Mündungsbremse',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Schwere Mündungsbremse'
-},
-['COMPONENT_AT_MUZZLE_6'] = {
-    label = 'Schräge Mündungsbremse',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Schräge Mündungsbremse'
-},
-['COMPONENT_AT_MUZZLE_7'] = {
-    label = 'Gesplittete Mündungsbremse',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Gesplittete Mündungsbremse'
-},
-['COMPONENT_AT_STHOOK'] = {
-    label = 'Stunt-Haken',
-    weight = 200,
-    stack = true,
-    close = true,
-    description = 'Stunt-Haken Aufsatz'
-},
-['COMPONENT_AT_RAILCOVER_01'] = {
-    label = 'Schienenschutz',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Schienenschutz für Gewehre'
-},
--- Erweiterte Magazine - Pistolen
-['COMPONENT_PISTOL_CLIP_02'] = {
-    label = 'Ext. Mag Pistol',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Pistol'
-},
-['COMPONENT_PISTOL_MK2_CLIP_02'] = {
-    label = 'Ext. Mag Pistol Mk2',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Pistol Mk2'
-},
-['COMPONENT_COMBATPISTOL_CLIP_02'] = {
-    label = 'Ext. Mag Combat Pistol',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Combat Pistol'
-},
-['COMPONENT_APPISTOL_CLIP_02'] = {
-    label = 'Ext. Mag AP Pistol',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für AP Pistol'
-},
-['COMPONENT_PISTOL50_CLIP_02'] = {
-    label = 'Ext. Mag Pistol .50',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Pistol .50'
-},
-['COMPONENT_SNSPISTOL_CLIP_02'] = {
-    label = 'Ext. Mag SNS Pistol',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für SNS Pistol'
-},
-['COMPONENT_SNSPISTOL_MK2_CLIP_02'] = {
-    label = 'Ext. Mag SNS Pistol Mk2',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für SNS Pistol Mk2'
-},
-['COMPONENT_HEAVYPISTOL_CLIP_02'] = {
-    label = 'Ext. Mag Heavy Pistol',
-    weight = 50,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Heavy Pistol'
-},
--- Erweiterte Magazine - SMGs
-['COMPONENT_MICROSMG_CLIP_02'] = {
-    label = 'Ext. Mag Micro SMG',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Micro SMG'
-},
-['COMPONENT_SMG_CLIP_02'] = {
-    label = 'Ext. Mag SMG',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für SMG'
-},
-['COMPONENT_SMG_CLIP_03'] = {
-    label = 'Trommelmagazin SMG',
-    weight = 120,
-    stack = true,
-    close = true,
-    description = 'Trommelmagazin für SMG'
-},
-['COMPONENT_SMG_MK2_CLIP_02'] = {
-    label = 'Ext. Mag SMG Mk2',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für SMG Mk2'
-},
-['COMPONENT_ASSAULTSMG_CLIP_02'] = {
-    label = 'Ext. Mag Assault SMG',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Assault SMG'
-},
-['COMPONENT_COMBATPDW_CLIP_02'] = {
-    label = 'Ext. Mag Combat PDW',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Combat PDW'
-},
-['COMPONENT_MINISMG_CLIP_02'] = {
-    label = 'Ext. Mag Mini SMG',
-    weight = 80,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Mini SMG'
-},
--- Erweiterte Magazine - Sturmgewehre
-['COMPONENT_ASSAULTRIFLE_CLIP_02'] = {
-    label = 'Ext. Mag Assault Rifle',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Assault Rifle'
-},
-['COMPONENT_ASSAULTRIFLE_CLIP_03'] = {
-    label = 'Trommelmagazin Assault Rifle',
-    weight = 150,
-    stack = true,
-    close = true,
-    description = 'Trommelmagazin für Assault Rifle'
-},
-['COMPONENT_ASSAULTRIFLE_MK2_CLIP_02'] = {
-    label = 'Ext. Mag Assault Rifle Mk2',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Assault Rifle Mk2'
-},
-['COMPONENT_CARBINERIFLE_CLIP_02'] = {
-    label = 'Ext. Mag Carbine Rifle',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Carbine Rifle'
-},
-['COMPONENT_CARBINERIFLE_CLIP_03'] = {
-    label = 'Trommelmagazin Carbine Rifle',
-    weight = 150,
-    stack = true,
-    close = true,
-    description = 'Trommelmagazin für Carbine Rifle'
-},
-['COMPONENT_CARBINERIFLE_MK2_CLIP_02'] = {
-    label = 'Ext. Mag Carbine Rifle Mk2',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Carbine Rifle Mk2'
-},
-['COMPONENT_SPECIALCARBINE_CLIP_02'] = {
-    label = 'Ext. Mag Special Carbine',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Special Carbine'
-},
-['COMPONENT_SPECIALCARBINE_MK2_CLIP_02'] = {
-    label = 'Ext. Mag Special Carbine Mk2',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Special Carbine Mk2'
-},
-['COMPONENT_BULLPUPRIFLE_CLIP_02'] = {
-    label = 'Ext. Mag Bullpup Rifle',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Bullpup Rifle'
-},
-['COMPONENT_BULLPUPRIFLE_MK2_CLIP_02'] = {
-    label = 'Ext. Mag Bullpup Rifle Mk2',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Bullpup Rifle Mk2'
-},
-['COMPONENT_COMPACTRIFLE_CLIP_02'] = {
-    label = 'Ext. Mag Compact Rifle',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Compact Rifle'
-},
-['COMPONENT_MILITARYRIFLE_CLIP_02'] = {
-    label = 'Ext. Mag Military Rifle',
-    weight = 100,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Military Rifle'
-},
--- Erweiterte Magazine - Maschinengewehre
-['COMPONENT_MG_CLIP_02'] = {
-    label = 'Ext. Mag MG',
-    weight = 200,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für MG'
-},
-['COMPONENT_COMBATMG_CLIP_02'] = {
-    label = 'Ext. Mag Combat MG',
-    weight = 200,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Combat MG'
-},
-['COMPONENT_COMBATMG_MK2_CLIP_02'] = {
-    label = 'Ext. Mag Combat MG Mk2',
-    weight = 200,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Combat MG Mk2'
-},
--- Erweiterte Magazine - Scharfschützengewehre
-['COMPONENT_SNIPERRIFLE_CLIP_02'] = {
-    label = 'Ext. Mag Sniper Rifle',
-    weight = 150,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Sniper Rifle'
-},
-['COMPONENT_HEAVYSNIPER_MK2_CLIP_02'] = {
-    label = 'Ext. Mag Heavy Sniper Mk2',
-    weight = 150,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Heavy Sniper Mk2'
-},
-['COMPONENT_MARKSMANRIFLE_CLIP_02'] = {
-    label = 'Ext. Mag Marksman Rifle',
-    weight = 150,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Marksman Rifle'
-},
-['COMPONENT_MARKSMANRIFLE_MK2_CLIP_02'] = {
-    label = 'Ext. Mag Marksman Rifle Mk2',
-    weight = 150,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Marksman Rifle Mk2'
-},
--- Erweiterte Magazine - Schrotflinten
-['COMPONENT_PUMPSHOTGUN_MK2_CLIP_02'] = {
-    label = 'Ext. Mag Pump Shotgun Mk2',
-    weight = 120,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Pump Shotgun Mk2'
-},
-['COMPONENT_AUTOSHOTGUN_CLIP_02'] = {
-    label = 'Ext. Mag Sweeper Shotgun',
-    weight = 120,
-    stack = true,
-    close = true,
-    description = 'Erweitertes Magazin für Sweeper Shotgun'
+    description = 'Taktischer Waffenskin'
 },
 ['bandage'] = {
     label = 'Verband',
