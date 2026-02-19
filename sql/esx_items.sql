@@ -1,6 +1,6 @@
 -- ESX Items SQL
 -- Import: mysql -u root -p esx < esx_items.sql
--- Total: 210 items
+-- Total: 270 items
 
 
 -- Pistolen
@@ -141,13 +141,85 @@ INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('a
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('ammo_grenade', 'Granaten', 350, 0, 1);
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('ammo_50cal', '.50 Cal Munition', 300, 0, 1);
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('ammo_armor_piercing', 'Panzerbrechende Munition', 400, 0, 1);
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('weapon_flashlight', 'Taschenlampe Aufsatz', 50, 0, 1);
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('weapon_scope', 'Zielfernrohr', 200, 0, 1);
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('weapon_suppressor', 'Schalldämpfer', 300, 0, 1);
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('weapon_grip', 'Griff', 100, 0, 1);
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('weapon_extendedmag', 'Erweitertes Magazin', 150, 0, 1);
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('weapon_luxuryfinish', 'Luxus Waffenskin', 500, 0, 1);
-INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('weapon_tacticalfinish', 'Taktischer Waffenskin', 400, 0, 1);
+-- Waffenzubehör (GTA V Online Komponenten)
+-- Taschenlampen-Aufsätze
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_AR_FLSH', 'Taschenlampe (Gewehr/SMG)', 50, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_PI_FLSH', 'Taschenlampe (Pistole)', 50, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_PI_FLSH_02', 'Taschenlampe v2 (Pistole)', 50, 0, 1);
+-- Zielfernrohre
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SCOPE_MACRO', 'Scope klein (Pistole/SMG)', 150, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SCOPE_MACRO_02', 'Scope klein v2 (Pistole/SMG)', 150, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SCOPE_SMALL', 'Kurzes Scope', 200, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SCOPE_SMALL_02', 'Kurzes Scope v2', 200, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SCOPE_MEDIUM', 'Scope Mittel', 250, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SCOPE_LARGE', 'Scope Groß', 300, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM', 'Scope Fixiert (Sniper)', 350, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SCOPE_NV', 'Nachtsichtvisier', 400, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SCOPE_THERMAL', 'Wärmesichtvisier', 450, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SCOPE_MAX', 'Maximales Scope', 500, 0, 1);
+-- Schalldämpfer
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_AR_SUPP', 'Schalldämpfer (Gewehr)', 300, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_AR_SUPP_02', 'Schalldämpfer v2 (Gewehr)', 300, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_PI_SUPP_02', 'Schalldämpfer (Pistole)', 250, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SG_SUPP', 'Schalldämpfer (Schrotflinte)', 350, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SG_SUPP_03', 'Schalldämpfer v3 (Schrotflinte)', 350, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SR_SUPP', 'Schalldämpfer (Sniper)', 400, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_SR_SUPP_03', 'Schalldämpfer v3 (Sniper)', 400, 0, 1);
+-- Griffe
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_AR_AFGRIP', 'Untergriff (Gewehr)', 100, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_AR_AFGRIP_02', 'Untergriff v2 (Gewehr)', 100, 0, 1);
+-- Mündungsbremsen
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_MUZZLE_1', 'Flache Mündungsbremse', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_MUZZLE_2', 'Taktische Mündungsbremse', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_MUZZLE_3', 'Fette Mündungsbremse', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_MUZZLE_4', 'Präzise Mündungsbremse', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_MUZZLE_5', 'Schwere Mündungsbremse', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_MUZZLE_6', 'Schräge Mündungsbremse', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_MUZZLE_7', 'Gesplittete Mündungsbremse', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_STHOOK', 'Stunt-Haken', 200, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AT_RAILCOVER_01', 'Schienenschutz', 100, 0, 1);
+-- Erweiterte Magazine - Pistolen
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_PISTOL_CLIP_02', 'Ext. Mag Pistol', 50, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_PISTOL_MK2_CLIP_02', 'Ext. Mag Pistol Mk2', 50, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_COMBATPISTOL_CLIP_02', 'Ext. Mag Combat Pistol', 50, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_APPISTOL_CLIP_02', 'Ext. Mag AP Pistol', 50, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_PISTOL50_CLIP_02', 'Ext. Mag Pistol .50', 50, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_SNSPISTOL_CLIP_02', 'Ext. Mag SNS Pistol', 50, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_SNSPISTOL_MK2_CLIP_02', 'Ext. Mag SNS Pistol Mk2', 50, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_HEAVYPISTOL_CLIP_02', 'Ext. Mag Heavy Pistol', 50, 0, 1);
+-- Erweiterte Magazine - SMGs
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_MICROSMG_CLIP_02', 'Ext. Mag Micro SMG', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_SMG_CLIP_02', 'Ext. Mag SMG', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_SMG_CLIP_03', 'Trommelmagazin SMG', 120, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_SMG_MK2_CLIP_02', 'Ext. Mag SMG Mk2', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_ASSAULTSMG_CLIP_02', 'Ext. Mag Assault SMG', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_COMBATPDW_CLIP_02', 'Ext. Mag Combat PDW', 80, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_MINISMG_CLIP_02', 'Ext. Mag Mini SMG', 80, 0, 1);
+-- Erweiterte Magazine - Sturmgewehre
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_ASSAULTRIFLE_CLIP_02', 'Ext. Mag Assault Rifle', 100, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_ASSAULTRIFLE_CLIP_03', 'Trommelmagazin Assault Rifle', 150, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_ASSAULTRIFLE_MK2_CLIP_02', 'Ext. Mag Assault Rifle Mk2', 100, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_CARBINERIFLE_CLIP_02', 'Ext. Mag Carbine Rifle', 100, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_CARBINERIFLE_CLIP_03', 'Trommelmagazin Carbine Rifle', 150, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_CARBINERIFLE_MK2_CLIP_02', 'Ext. Mag Carbine Rifle Mk2', 100, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_SPECIALCARBINE_CLIP_02', 'Ext. Mag Special Carbine', 100, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_SPECIALCARBINE_MK2_CLIP_02', 'Ext. Mag Special Carbine Mk2', 100, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_BULLPUPRIFLE_CLIP_02', 'Ext. Mag Bullpup Rifle', 100, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_BULLPUPRIFLE_MK2_CLIP_02', 'Ext. Mag Bullpup Rifle Mk2', 100, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_COMPACTRIFLE_CLIP_02', 'Ext. Mag Compact Rifle', 100, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_MILITARYRIFLE_CLIP_02', 'Ext. Mag Military Rifle', 100, 0, 1);
+-- Erweiterte Magazine - Maschinengewehre
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_MG_CLIP_02', 'Ext. Mag MG', 200, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_COMBATMG_CLIP_02', 'Ext. Mag Combat MG', 200, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_COMBATMG_MK2_CLIP_02', 'Ext. Mag Combat MG Mk2', 200, 0, 1);
+-- Erweiterte Magazine - Scharfschützengewehre
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_SNIPERRIFLE_CLIP_02', 'Ext. Mag Sniper Rifle', 150, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_HEAVYSNIPER_MK2_CLIP_02', 'Ext. Mag Heavy Sniper Mk2', 150, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_MARKSMANRIFLE_CLIP_02', 'Ext. Mag Marksman Rifle', 150, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_MARKSMANRIFLE_MK2_CLIP_02', 'Ext. Mag Marksman Rifle Mk2', 150, 0, 1);
+-- Erweiterte Magazine - Schrotflinten
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_PUMPSHOTGUN_MK2_CLIP_02', 'Ext. Mag Pump Shotgun Mk2', 120, 0, 1);
+INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('COMPONENT_AUTOSHOTGUN_CLIP_02', 'Ext. Mag Sweeper Shotgun', 120, 0, 1);
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('bandage', 'Verband', 115, 0, 1);
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('medkit', 'Erste-Hilfe-Kasten', 450, 0, 1);
 INSERT INTO `items` (`name`, `label`, `weight`, `rare`, `can_remove`) VALUES ('painkiller', 'Schmerzmittel', 80, 0, 1);
