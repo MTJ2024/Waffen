@@ -26,7 +26,7 @@ Config.AuthorizedPlayers = {
     -- "license:def456...",
 }
 
-Config.OpenKey = 'F9'
+Config.Command = 'waffen' -- Chat command to open the weapon menu (e.g. /waffen)
 Config.DefaultAmmo = 250
 
 -- Unendliche Munition für autorisierte Spieler
